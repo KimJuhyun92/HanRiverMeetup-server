@@ -14,7 +14,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@MapperScan(basePackages="com.hangang.HangangRiver.dao")
+@MapperScan(basePackages="com.hangang.HangangRiver")
 @EnableTransactionManagement
 public class DatabaseConfig {
 	@Bean
@@ -22,7 +22,7 @@ public class DatabaseConfig {
 		final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
 		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-		sessionFactory.setMapperLocations(resolver.getResources("classpath:com/hangang/HangangRiver/dao/*.xml"));
+		sessionFactory.setMapperLocations(resolver.getResources("classpath:com/hangang/HangangRiver/*.xml"));
 		return sessionFactory.getObject();
 	}
 

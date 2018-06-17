@@ -1,12 +1,11 @@
-package com.hangang.HangangRiver.controller;
+package com.hangang.HangangRiver.test.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hangang.HangangRiver.service.DBService;
-
+import com.hangang.HangangRiver.test.service.DBService;
 
 @RestController
 public class DBController {

@@ -1,4 +1,4 @@
-package com.hangang.HangangRiver.dao;
+package com.hangang.HangangRiver.test.dao;
 
 public interface DBMapper {
 	/* DB Select  */
