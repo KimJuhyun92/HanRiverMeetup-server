@@ -1,4 +1,4 @@
-package com.hangang.HangangRiver.test.controller;
+package com.hangang.HangangRiver.test.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

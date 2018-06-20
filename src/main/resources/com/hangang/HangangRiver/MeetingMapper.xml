@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangang.HangangRiver.meeting.dao.MeetingMapper">
+
+	<insert id="insert" parameterType="com.hangang.HangangRiver.meeting.model.Meeting">
+		INSERT INTO
+			meeting
+			(activity_seq, user_id, description, participants_cnt, meeting_location, meeting_time, expected_cost, creation_time, modification_time, title, contact)
+		VALUES
+			(#{activity_seq}, #{user_id}, #{description}, #{participants_cnt}, #{meeting_location}, #{meeting_time}, #{expected_cost}, current_timestamp, current_timestamp, #{title},#{contact})
+	</insert>
+
+	<select id="detail" parameterType="com.hangang.HangangRiver.meeting.model.Meeting" resultType="com.hangang.HangangRiver.meeting.model.Meeting">
+		SELECT
+			*
+		FROM
+			meeting
+		WHERE
+			meeting_seq = #{meeting_seq}
+	</select>
+
+	<update id="update" parameterType="com.hangang.HangangRiver.meeting.model.Meeting">
+		UPDATE
+			meeting
+		<set>
+			<if test="description != null and description != ''">
+				description = #{description},
+			</if>
+			<if test="participants_cnt != null">
+				participants_cnt = #{participants_cnt},
+			</if>
+			<if test="meeting_location != null and meeting_location != ''">
+				meeting_location = #{meeting_location},
+			</if>
+			<if test="meeting_time != null">
+				meeting_time = #{meeting_time},
+			</if>
+			<if test="expected_cost != null">
+				expected_cost = #{expected_cost},
+			</if>
+			<if test="contact != null and contact != ''">
+				contact = #{contact}
+			</if>
+		</set>
+		WHERE
+			meeting_seq = #{meeting_seq}
+	</update>
+
+	<insert id="move" parameterType="com.hangang.HangangRiver.meeting.model.Meeting">
+		INSERT INTO
+			deleted_meeting
+			(activity_seq, user_id, description, participants_cnt, meeting_location, meeting_time, expected_cost, creation_time, modification_time, title, contact)
+		VALUES
+			(#{activity_seq}, #{user_id}, #{description}, #{participants_cnt}, #{meeting_location}, #{meeting_time}, #{expected_cost}, current_timestamp, current_timestamp, #{title},#{contact})
+	</insert>
+
+	<delete id="delete" parameterType="com.hangang.HangangRiver.meeting.model.Meeting">
+		DELETE
+		FROM
+			meeting
+		WHERE
+			meeting_seq = #{meeting_seq}
+	</delete>
+</mapper>
