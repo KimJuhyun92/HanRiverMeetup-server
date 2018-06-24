@@ -33,7 +33,7 @@ public class MeetingController {
 
 	@GetMapping("/detail/{meeting_seq}") 
 	private Meeting meetingDetail(@PathVariable int meeting_seq) throws Exception{
-		return meetingService.showDetail(meeting_seq);
+		return meetingService.getMeetingDetailById(meeting_seq);
 	}
 
 	@PostMapping("/modify")

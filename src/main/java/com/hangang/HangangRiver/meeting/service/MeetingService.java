@@ -16,7 +16,7 @@ public class MeetingService {
 		meetingMapper.insert(meeting);
 	}
 
-	public Meeting showDetail(int meeting_seq){
+	public Meeting getMeetingDetailById(int meeting_seq){
 		return meetingMapper.detail(meeting_seq);
 	}
 
