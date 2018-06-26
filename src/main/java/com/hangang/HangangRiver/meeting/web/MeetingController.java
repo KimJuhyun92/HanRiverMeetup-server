@@ -1,5 +1,7 @@
 package com.hangang.HangangRiver.meeting.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hangang.HangangRiver.meeting.model.Meeting;
+import com.hangang.HangangRiver.meeting.model.MeetingForm;
 import com.hangang.HangangRiver.meeting.service.MeetingService;
 
 import io.swagger.annotations.ApiOperation;
@@ -48,5 +51,10 @@ public class MeetingController {
 	@GetMapping("/remove/{meeting_seq}") 
 	private void remove(@PathVariable int meeting_seq) throws Exception{
 		meetingService.remove(meeting_seq);
+	}
+
+	@GetMapping("/listAll") //추후 검색기능 추가 시 searchvalue 파라미터로 넘겨줘야함
+	private List<MeetingForm> listAll(HttpServletRequest request, MeetingForm meetingForm) throws Exception{
+		return meetingService.selectTodayMeeting(meetingForm);
 	}
 }

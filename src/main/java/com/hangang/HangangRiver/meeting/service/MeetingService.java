@@ -1,10 +1,17 @@
 package com.hangang.HangangRiver.meeting.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hangang.HangangRiver.meeting.dao.MeetingMapper;
 import com.hangang.HangangRiver.meeting.model.Meeting;
+import com.hangang.HangangRiver.meeting.model.MeetingForm;
 
 @Service
 public class MeetingService {
@@ -28,5 +35,15 @@ public class MeetingService {
 		Meeting meeting = meetingMapper.detail(meeting_seq);
 		meetingMapper.move(meeting);
 		meetingMapper.delete(meeting_seq);
+	}
+
+	public List<MeetingForm> selectTodayMeeting(MeetingForm meetingForm){
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+		Date currentTime = new Date ();
+		String mTime = mSimpleDateFormat.format ( currentTime );
+
+		meetingForm.setStartTime(mTime+" 00:00:00");
+		meetingForm.setEndTime(mTime+" 23:59:59");
+		return meetingMapper.selectAll(meetingForm);
 	}
 }

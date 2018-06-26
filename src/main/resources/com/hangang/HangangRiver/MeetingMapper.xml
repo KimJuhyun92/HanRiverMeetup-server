@@ -61,4 +61,18 @@
 		WHERE
 			meeting_seq = #{meeting_seq}
 	</delete>
+
+	<select id="selectAll" parameterType="com.hangang.HangangRiver.meeting.model.Meeting" resultType="com.hangang.HangangRiver.meeting.model.Meeting">
+		SELECT
+			mmseq as meeting_seq, creation_time
+		FROM
+			(SELECT
+				m.meeting_seq AS mmseq, c.meeting_seq AS cmseq, m.creation_time
+			FROM
+				meeting m LEFT JOIN contacted_meeting c ON m.meeting_seq = c.meeting_seq) test
+			WHERE
+				cmseq IS NULL 
+				AND
+				creation_time BETWEEN #{startTime} AND #{endTime}
+	</select>
 </mapper>
