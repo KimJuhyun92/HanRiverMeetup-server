@@ -18,4 +18,12 @@
 			application_seq = #{application_seq}
 	</delete>
 
+	<select id="getApplications" parameterType="com.hangang.HangangRiver.application.model.Application" resultType="com.hangang.HangangRiver.application.model.Application">
+		SELECT
+			*
+		FROM
+			application
+		WHERE
+			meeting_seq = #{meeting_seq}
+	</select>
 </mapper>
