@@ -53,7 +53,7 @@ public class MeetingController {
 		meetingService.remove(meeting_seq);
 	}
 
-	@GetMapping("/listAll") //추후 검색기능 추가 시 searchvalue 파라미터로 넘겨줘야함
+	@GetMapping("/listAll") //TODO:추후 검색기능 추가 시 searchvalue 파라미터로 넘겨줘야함
 	private List<MeetingForm> listAll(HttpServletRequest request, MeetingForm meetingForm) throws Exception{
 		return meetingService.selectTodayMeeting(meetingForm);
 	}

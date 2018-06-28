@@ -38,12 +38,12 @@ public class MeetingService {
 	}
 
 	public List<MeetingForm> selectTodayMeeting(MeetingForm meetingForm){
-		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+		SimpleDateFormat SimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
 		Date currentTime = new Date ();
-		String mTime = mSimpleDateFormat.format ( currentTime );
+		String time = SimpleDateFormat.format ( currentTime );
 
-		meetingForm.setStartTime(mTime+" 00:00:00");
-		meetingForm.setEndTime(mTime+" 23:59:59");
+		meetingForm.setStartTime(time+" 00:00:00");
+		meetingForm.setEndTime(time+" 23:59:59");
 		return meetingMapper.selectAll(meetingForm);
 	}
 }
