@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangang.HangangRiver.comment.dao.CommentMapper">
+
+	<insert id="insert" parameterType="com.hangang.HangangRiver.comment.model.Comment">
+		INSERT INTO
+			comment
+			(meeting_seq, user_id, comment,creation_time)
+		VALUES
+			(#{meeting_seq}, #{user_id}, #{comment}, current_timestamp)
+	</insert>
+
+	<delete id="delete" parameterType="com.hangang.HangangRiver.comment.model.Comment">
+		DELETE
+		FROM
+			comment
+		WHERE
+			comment_seq = #{comment_seq}
+	</delete>
+
+	<select id="selectCommentList" parameterType="com.hangang.HangangRiver.comment.model.Comment" resultType="com.hangang.HangangRiver.comment.model.Comment">
+		SELECT
+			*
+		FROM
+			comment
+		WHERE
+			meeting_seq = #{meeting_seq}
+	</select>
+</mapper>
