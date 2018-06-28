@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangang.HangangRiver.application.dao.ApplicationMapper">
+
+	<insert id="insert" parameterType="com.hangang.HangangRiver.application.model.Application">
+		INSERT INTO
+			application
+			(meeting_seq, user_id, participants_cnt, description, contact, application_time)
+		VALUES
+			(#{meeting_seq}, #{user_id}, #{participants_cnt}, #{description}, #{contact}, current_timestamp)
+	</insert>
+
+	<delete id="delete" parameterType="com.hangang.HangangRiver.application.model.Application">
+		DELETE
+		FROM
+			application
+		WHERE
+			application_seq = #{application_seq}
+	</delete>
+
+</mapper>
