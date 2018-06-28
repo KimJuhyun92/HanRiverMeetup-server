@@ -38,4 +38,8 @@ public class ApplicationController {
 		applicationService.remove(application_seq);
 	}
 
+	@GetMapping("/getApplications/{meeting_seq}") 
+	private List<Application> getApplications(@PathVariable int meeting_seq) throws Exception{
+		return applicationService.getApplicationsByMeetingId(meeting_seq);
+	}
 }
