@@ -1,4 +1,4 @@
-package com.hangang.HangangRiver.meeting.service;
+package com.hangang.HangangRiver.comment.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

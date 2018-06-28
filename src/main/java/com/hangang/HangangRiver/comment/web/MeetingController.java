@@ -1,4 +1,4 @@
-package com.hangang.HangangRiver.meeting.web;
+package com.hangang.HangangRiver.comment.web;
 
 import java.util.List;
 
