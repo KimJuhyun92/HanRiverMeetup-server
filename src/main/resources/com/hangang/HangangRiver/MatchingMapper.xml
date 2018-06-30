@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangang.HangangRiver.matching.dao.MatchingMapper">
+
+	<insert id="insert" parameterType="com.hangang.HangangRiver.matching.model.ContactedMeeting">
+		INSERT INTO
+			contacted_meeting
+			(meeting_seq, application_seq, contact_time)
+		VALUES
+			(#{meeting_seq}, #{application_seq}, current_timestamp)
+	</insert>
+
+	<select id="detail" parameterType="com.hangang.HangangRiver.matching.model.ContactedMeeting"
+			resultType="com.hangang.HangangRiver.matching.model.ContactedMeeting">
+		SELECT
+			*
+		FROM
+			contacted_meeting
+		WHERE
+			contact_seq = #{contact_seq}
+	</select>
+
+	<select id="detailByMatchingInfo" resultType="com.hangang.HangangRiver.matching.model.ContactedMeeting">
+		SELECT
+			*
+		FROM
+			contacted_meeting
+		WHERE
+			meeting_seq = #{meeting_seq} AND application_seq = #{application_seq}
+	</select>
+
+
+	<delete id="delete" parameterType="com.hangang.HangangRiver.matching.model.ContactedMeeting">
+		DELETE
+		FROM
+			contacted_meeting
+		WHERE
+			contact_seq = #{contact_seq}
+	</delete>
+</mapper>
