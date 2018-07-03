@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hangang.HangangRiver.matching.dao.MatchingMapper">
+<mapper namespace="com.hangang.HangangRiver.meeting.dao.MatchingMapper">
 
-	<insert id="insert" parameterType="com.hangang.HangangRiver.matching.model.ContactedMeeting">
+	<insert id="insert" parameterType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
 		INSERT INTO
 			contacted_meeting
 			(meeting_seq, application_seq, contact_time)
@@ -10,8 +10,8 @@
 			(#{meeting_seq}, #{application_seq}, current_timestamp)
 	</insert>
 
-	<select id="detail" parameterType="com.hangang.HangangRiver.matching.model.ContactedMeeting"
-			resultType="com.hangang.HangangRiver.matching.model.ContactedMeeting">
+	<select id="detail" parameterType="com.hangang.HangangRiver.meeting.model.ContactedMeeting"
+			resultType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
 		SELECT
 			*
 		FROM
@@ -20,7 +20,7 @@
 			contact_seq = #{contact_seq}
 	</select>
 
-	<select id="detailByMatchingInfo" resultType="com.hangang.HangangRiver.matching.model.ContactedMeeting">
+	<select id="detailByMatchingInfo" resultType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
 		SELECT
 			*
 		FROM
@@ -30,7 +30,7 @@
 	</select>
 
 
-	<delete id="delete" parameterType="com.hangang.HangangRiver.matching.model.ContactedMeeting">
+	<delete id="delete" parameterType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
 		DELETE
 		FROM
 			contacted_meeting

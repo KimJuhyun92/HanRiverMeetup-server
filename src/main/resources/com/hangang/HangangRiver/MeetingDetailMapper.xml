@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hangang.HangangRiver.meeting.dao.MeetingMapper">
+<mapper namespace="com.hangang.HangangRiver.meeting.dao.MeetingDetailMapper">
 
-	<insert id="insert" parameterType="com.hangang.HangangRiver.meeting.model.Meeting">
+	<insert id="insert" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		INSERT INTO
 			meeting
 			(activity_seq, user_id, description, participants_cnt, meeting_location, meeting_time, expected_cost, creation_time, modification_time, title, contact)
@@ -10,7 +10,7 @@
 			(#{activity_seq}, #{user_id}, #{description}, #{participants_cnt}, #{meeting_location}, #{meeting_time}, #{expected_cost}, current_timestamp, current_timestamp, #{title},#{contact})
 	</insert>
 
-	<select id="detail" parameterType="com.hangang.HangangRiver.meeting.model.Meeting" resultType="com.hangang.HangangRiver.meeting.model.Meeting">
+	<select id="detail" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
 			*
 		FROM
@@ -19,34 +19,34 @@
 			meeting_seq = #{meeting_seq}
 	</select>
 
-	<update id="update" parameterType="com.hangang.HangangRiver.meeting.model.Meeting">
+	<update id="update">
 		UPDATE
 			meeting
 		<set>
-			<if test="description != null and description != ''">
-				description = #{description},
+			<if test="meetingDetail.description != null and meetingDetail.description != ''">
+				description = #{meetingDetail.description},
 			</if>
-			<if test="participants_cnt != null">
-				participants_cnt = #{participants_cnt},
+			<if test="meetingDetail.participants_cnt != null">
+				participants_cnt = #{meetingDetail.participants_cnt},
 			</if>
-			<if test="meeting_location != null and meeting_location != ''">
-				meeting_location = #{meeting_location},
+			<if test="meetingDetail.meeting_location != null and meetingDetail.meeting_location != ''">
+				meeting_location = #{meetingDetail.meeting_location},
 			</if>
-			<if test="meeting_time != null">
-				meeting_time = #{meeting_time},
+			<if test="meetingDetail.meeting_time != null">
+				meeting_time = #{meetingDetail.meeting_time},
 			</if>
-			<if test="expected_cost != null">
-				expected_cost = #{expected_cost},
+			<if test="meetingDetail.expected_cost != null">
+				expected_cost = #{meetingDetail.expected_cost},
 			</if>
-			<if test="contact != null and contact != ''">
-				contact = #{contact}
+			<if test="meetingDetail.contact != null and meetingDetail.contact != ''">
+				contact = #{meetingDetail.contact}
 			</if>
 		</set>
 		WHERE
 			meeting_seq = #{meeting_seq}
 	</update>
 
-	<insert id="move" parameterType="com.hangang.HangangRiver.meeting.model.Meeting">
+	<insert id="move" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		INSERT INTO
 			deleted_meeting
 			(activity_seq, user_id, description, participants_cnt, meeting_location, meeting_time, expected_cost, creation_time, modification_time, title, contact)
@@ -54,7 +54,7 @@
 			(#{activity_seq}, #{user_id}, #{description}, #{participants_cnt}, #{meeting_location}, #{meeting_time}, #{expected_cost}, current_timestamp, current_timestamp, #{title},#{contact})
 	</insert>
 
-	<delete id="delete" parameterType="com.hangang.HangangRiver.meeting.model.Meeting">
+	<delete id="delete" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		DELETE
 		FROM
 			meeting
@@ -62,7 +62,7 @@
 			meeting_seq = #{meeting_seq}
 	</delete>
 
-	<select id="selectAll" parameterType="com.hangang.HangangRiver.meeting.model.Meeting" resultType="com.hangang.HangangRiver.meeting.model.Meeting">
+	<select id="selectAll" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
 			mmseq as meeting_seq, creation_time
 		FROM

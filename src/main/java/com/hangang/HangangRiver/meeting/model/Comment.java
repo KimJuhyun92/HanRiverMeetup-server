@@ -1,4 +1,4 @@
-package com.hangang.HangangRiver.comment.model;
+package com.hangang.HangangRiver.meeting.model;
 
 
 import java.util.Date;

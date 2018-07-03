@@ -1,6 +1,6 @@
-package com.hangang.HangangRiver.matching.dao;
+package com.hangang.HangangRiver.meeting.dao;
 
-import com.hangang.HangangRiver.matching.model.ContactedMeeting;
+import com.hangang.HangangRiver.meeting.model.ContactedMeeting;
 import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;

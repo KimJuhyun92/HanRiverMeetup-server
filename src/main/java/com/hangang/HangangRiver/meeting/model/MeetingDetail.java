@@ -6,7 +6,7 @@ import java.util.Date;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class Meeting {
+public class MeetingDetail {
 
 	private int meeting_seq;
 	private int activity_seq;
@@ -121,7 +121,7 @@ public class Meeting {
 
 	@Override
 	public String toString() {
-		return "Meeting [meeting_seq=" + meeting_seq + ", activity_seq=" + activity_seq + ", user_id=" + user_id
+		return "MeetingDetail [meeting_seq=" + meeting_seq + ", activity_seq=" + activity_seq + ", user_id=" + user_id
 				+ ", description=" + description + ", participants_cnt=" + participants_cnt + ", meeting_location="
 				+ meeting_location + ", meeting_time=" + meeting_time + ", expected_cost=" + expected_cost
 				+ ", creation_time=" + creation_time + ", modification_time=" + modification_time + ", title=" + title
