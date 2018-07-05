@@ -1,8 +1,8 @@
-package com.hangang.HangangRiver.comment.dao;
+package com.hangang.HangangRiver.meeting.dao;
 
 import java.util.List;
 
-import com.hangang.HangangRiver.comment.model.Comment;
+import com.hangang.HangangRiver.meeting.model.Comment;
 
 public interface CommentMapper {
 	public void insert(Comment comment);

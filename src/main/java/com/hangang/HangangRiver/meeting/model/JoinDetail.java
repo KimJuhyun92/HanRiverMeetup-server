@@ -1,8 +1,8 @@
-package com.hangang.HangangRiver.application.model;
+package com.hangang.HangangRiver.meeting.model;
 
 import java.util.Date;
 
-public class Application {
+public class JoinDetail {
 	private int application_seq;
 	private int meeting_seq;
 	private String user_id;
@@ -69,7 +69,7 @@ public class Application {
 
 	@Override
 	public String toString() {
-		return "Application [application_seq=" + application_seq + ", meeting_seq=" + meeting_seq + ", user_id="
+		return "JoinDetail [application_seq=" + application_seq + ", meeting_seq=" + meeting_seq + ", user_id="
 				+ user_id + ", description=" + description + ", participants_cnt=" + participants_cnt
 				+ ", application_time=" + application_time + ", contact=" + contact + "]";
 	}

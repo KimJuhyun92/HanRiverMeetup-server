@@ -1,7 +1,7 @@
 package com.hangang.HangangRiver.meeting.model;
 
 
-public class MeetingForm extends Meeting {
+public class MeetingDetailForm extends MeetingDetail {
 	private String startTime;
 	private String endTime;
 
@@ -23,7 +23,7 @@ public class MeetingForm extends Meeting {
 
 	@Override
 	public String toString() {
-		return "MeetingForm [startTime=" + startTime + ", endTime=" + endTime + "]";
+		return "MeetingDetailForm [startTime=" + startTime + ", endTime=" + endTime + "]";
 	}
 
 
