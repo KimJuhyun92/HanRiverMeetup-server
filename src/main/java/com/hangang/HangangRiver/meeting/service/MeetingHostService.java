@@ -1,5 +1,6 @@
 package com.hangang.HangangRiver.meeting.service;
 
+import com.hangang.HangangRiver.exceptions.DuplicatedMeetingException;
 import com.hangang.HangangRiver.meeting.dao.MeetingDetailMapper;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetailForm;
@@ -16,16 +17,25 @@ public class MeetingHostService {
     @Autowired
     MeetingDetailMapper meetingDetailMapper;
 
-    public void createMeeting(MeetingDetail meetingDetail){
-        meetingDetailMapper.insert(meetingDetail);
+    public MeetingDetail createMeeting(MeetingDetail meetingDetail) throws DuplicatedMeetingException {
+        boolean isDuplicated = meetingDetailMapper.isDuplicatedDetail(meetingDetail.getMeeting_time(), meetingDetail.getUser_id());
+
+        if(isDuplicated){
+            throw new DuplicatedMeetingException();
+        }
+        else{
+            meetingDetailMapper.insert(meetingDetail);
+            return meetingDetail;
+        }
     }
 
     public MeetingDetail getMeetingDetailById(int meeting_seq){
         return meetingDetailMapper.detail(meeting_seq);
     }
 
-    public void modifyMeeting(int meeting_seq, MeetingDetail meetingDetail){
+    public MeetingDetail modifyMeeting(int meeting_seq, MeetingDetail meetingDetail){
         meetingDetailMapper.update(meeting_seq, meetingDetail);
+        return meetingDetailMapper.detail(meeting_seq);
     }
 
     public void removeMeeting(int meeting_seq){
