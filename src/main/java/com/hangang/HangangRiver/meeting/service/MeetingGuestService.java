@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class MeetingGuestService extends MeetingBaseService{
-    public void join(JoinDetail joinDetail)
+    public JoinDetail join(JoinDetail joinDetail)
             throws ExistJoinDetailException, InvalidMeetingException {
 
         int meeting_seq = joinDetail.getMeeting_seq();
@@ -24,6 +24,7 @@ public class MeetingGuestService extends MeetingBaseService{
         }
 
         joinDetailMapper.insert(joinDetail);
+        return joinDetail;
     }
 
     public void cancleJoin(int application_seq){

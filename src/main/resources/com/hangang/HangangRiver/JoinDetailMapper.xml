@@ -26,4 +26,16 @@
 		WHERE
 			meeting_seq = #{meeting_seq}
 	</select>
+
+	<select id="isExistJoinDetails" resultType="boolean">
+		SELECT EXISTS(
+			SELECT
+				*
+			FROM
+				application
+			WHERE
+				meeting_seq = #{meeting_seq} AND
+				user_id = #{user_id}
+		)
+	</select>
 </mapper>

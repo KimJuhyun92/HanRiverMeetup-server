@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public class MeetingHostService {
-    @Autowired
-    MeetingDetailMapper meetingDetailMapper;
+public class MeetingHostService extends MeetingBaseService {
 
-    public MeetingDetail createMeeting(MeetingDetail meetingDetail) throws DuplicatedMeetingException {
+    public MeetingDetail createMeeting(MeetingDetail meetingDetail)
+            throws DuplicatedMeetingException {
+
         boolean isDuplicated = meetingDetailMapper.isDuplicatedDetail(meetingDetail.getMeeting_time(), meetingDetail.getUser_id());
 
         if(isDuplicated){

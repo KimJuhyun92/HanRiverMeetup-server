@@ -10,5 +10,5 @@ public interface JoinDetailMapper {
 	public void delete(int application_seq);
 	public List<JoinDetail> getJoinDetails(int meeting_seq);
 	boolean isExistJoinDetails(@Param("meeting_seq") int meeting_seq,
-							   @Param("userId") String user_id);
+							   @Param("user_id") String user_id);
 }
