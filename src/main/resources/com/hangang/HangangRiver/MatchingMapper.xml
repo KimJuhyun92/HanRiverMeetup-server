@@ -37,4 +37,15 @@
 		WHERE
 			contact_seq = #{contact_seq}
 	</delete>
+
+	<select id="isContactedMeeting" parameterType="int" resultType="boolean">
+		SELECT EXISTS(
+			SELECT
+				*
+			FROM
+				contacted_meeting
+			WHERE
+				meeting_seq = #{meeting_seq}
+		)
+	</select>
 </mapper>

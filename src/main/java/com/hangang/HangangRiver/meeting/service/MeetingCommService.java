@@ -1,23 +1,28 @@
 package com.hangang.HangangRiver.meeting.service;
 
-import com.hangang.HangangRiver.meeting.dao.CommentMapper;
-import com.hangang.HangangRiver.meeting.dao.MatchingMapper;
+import com.hangang.HangangRiver.exceptions.AlreadyContactedMeetingException;
+import com.hangang.HangangRiver.exceptions.InvalidMatchingInfoException;
+import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
 import com.hangang.HangangRiver.meeting.model.Comment;
 import com.hangang.HangangRiver.meeting.model.ContactedMeeting;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hangang.HangangRiver.meeting.model.JoinDetail;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MeetingCommService {
-    @Autowired
-    private CommentMapper commentMapper;
-    @Autowired
-    private MatchingMapper matchingMapper;
+public class MeetingCommService extends MeetingBaseService{
+    public Comment createComment(Comment comment) throws InvalidMeetingException {
+        // 1. Check the target meeting to be valid
+        int meeting_seq = comment.getMeeting_seq();
 
-    public void createComment(Comment comment){
-        commentMapper.insert(comment);
+        if (meetingDetailMapper.isExistMeetingDetail(meeting_seq)) {
+            commentMapper.insert(comment);
+            return comment;
+        }
+        else {
+            throw new InvalidMeetingException();
+        }
     }
 
     public List<Comment> getCommentsByMeeting(int meeting_seq){
@@ -28,11 +33,26 @@ public class MeetingCommService {
         commentMapper.delete(comment_seq);
     }
 
-    // public void match(int meetingGuestId, int meetingHostID)
-//    public ContactedMeeting insertM(ContactedMeeting meeting){
-//        matchingMapper.insert(meeting);
-//        return getContactedMeetingByMatchingInfo(meeting.getMeeting_seq(), meeting.getApplication_seq());
-//    }
+    public ContactedMeeting match(ContactedMeeting meeting)
+            throws InvalidMatchingInfoException, AlreadyContactedMeetingException {
+
+        int meeting_seq = meeting.getMeeting_seq();
+        int application_seq = meeting.getApplication_seq();
+        JoinDetail joinDetail = joinDetailMapper.getJoinDetail(application_seq);
+
+        if(meetingDetailMapper.isExistMeetingDetail(meeting_seq) == false
+                || joinDetail == null
+                || joinDetail.getMeeting_seq() != meeting_seq){
+            throw new InvalidMatchingInfoException();
+        }
+
+        if(matchingMapper.isContactedMeeting(meeting_seq)){
+            throw new AlreadyContactedMeetingException();
+        }
+
+        matchingMapper.insert(meeting);
+        return meeting;
+    }
 
     public ContactedMeeting getContactedMeetingById(int contact_seq){
         return matchingMapper.detail(contact_seq);
@@ -42,8 +62,9 @@ public class MeetingCommService {
         return matchingMapper.detailByMatchingInfo(meeting_seq, application_seq);
     }
 
-    // public void unmatch(int contact_seq)
-//    public void remove(int contact_seq){
-//        matchingMapper.delete(contact_seq);
-//    }
+    public void unmatch(int contact_seq){
+        matchingMapper.delete(contact_seq);
+    }
+
+    // TODO : User ID에 따른 모든 매칭된 미팅들을 가지고 와야할듯?
 }

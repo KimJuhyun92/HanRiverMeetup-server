@@ -8,6 +8,9 @@
 			(meeting_seq, user_id, comment,creation_time)
 		VALUES
 			(#{meeting_seq}, #{user_id}, #{comment}, current_timestamp)
+		<selectKey keyProperty="comment_seq" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 
 	<delete id="delete" parameterType="com.hangang.HangangRiver.meeting.model.Comment">
