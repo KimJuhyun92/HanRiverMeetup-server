@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangang.HangangRiver.access.dao.AccessMapper">
+
+	<insert id="insert" parameterType="com.hangang.HangangRiver.access.dao.AccessMapper">
+		INSERT INTO
+			user
+			(user_id, nickname, access_token, hangang_token, last_login_time, creation_time)
+		VALUES
+			(#{user_id}, #{nickname}, #{access_token}, #{hangang_token}, now(), now())
+	</insert>
+
+	<select id="detail" parameterType="com.hangang.HangangRiver.access.dao.AccessMapper" resultType="com.hangang.HangangRiver.access.dao.AccessMapper">
+		SELECT
+			*
+		FROM
+			user
+		WHERE
+			user_id = #{user_id}
+	</select>
+
+	<update id="update">
+		UPDATE
+			user
+		<set>
+			<if test="user.nickname != null and user.nickname != ''">
+				nickname = #{user.nickname},
+			</if>
+			<if test="user.access_token != null and user.access_token != ''">
+				access_token = #{user.access_token},
+			</if>
+			<if test="user.hangang_token != null and user.hangang_token != ''">
+				hangang_token = #{user.hangang_token},
+			</if>
+			<if test="user.last_login_time != null and user.last_login_time != ''">
+				last_login_time = #{user.last_login_time},
+			</if>
+		</set>
+		WHERE
+			user_id = #{user_id}
+	</update>
+
+</mapper>
