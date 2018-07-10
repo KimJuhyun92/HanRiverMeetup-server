@@ -4,10 +4,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
+import com.hangang.HangangRiver.exceptions.RequestFailException;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetailForm;
 import com.hangang.HangangRiver.meeting.service.MeetingHostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,36 +21,67 @@ public class MeetingHostController {
 	@Autowired
 	MeetingHostService meetingHostService;
 
-	@PostMapping("/meeting/{meeting_seq}")
-	private void createMeeting(HttpServletRequest request, @RequestBody MeetingDetail meetingDetail){
+	@PostMapping("/meeting")
+	@ResponseBody
+	private ResponseEntity<MeetingDetail> createMeeting(HttpServletRequest request, @RequestBody MeetingDetail meetingDetail){
 		try {
-			meetingHostService.createMeeting(meetingDetail);
-		} catch (Exception e) {
+			MeetingDetail createdMeetingDetail = meetingHostService.createMeeting(meetingDetail);
+			return ResponseEntity.ok().body(createdMeetingDetail);
+		}
+		catch (Exception e) {
 			e.printStackTrace();
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 
 	@GetMapping("/meeting/{meeting_seq}")
-	private MeetingDetail getMeetingDetail(@PathVariable int meeting_seq) throws Exception{
-		return meetingHostService.getMeetingDetailById(meeting_seq);
+	@ResponseBody
+	private ResponseEntity<MeetingDetail> getMeetingDetail(@PathVariable int meeting_seq){
+
+		MeetingDetail meetingDetail = meetingHostService.getMeetingDetailById(meeting_seq);
+
+		if(meetingDetail != null){
+			return ResponseEntity.ok().body(meetingDetail);
+		}
+
+		return ResponseEntity.badRequest().body(null);
 	}
 
 	@PutMapping("/meeting/{meeting_seq}")
-	private void modifyMeeting(@PathVariable int meeting_seq, @RequestBody MeetingDetail meetingDetail){
+	private ResponseEntity<MeetingDetail> modifyMeeting(@PathVariable int meeting_seq, @RequestBody MeetingDetail meetingDetail){
+
 		try {
-			meetingHostService.modifyMeeting(meeting_seq, meetingDetail);
-		} catch (Exception e) {
+			MeetingDetail modifiedMeetingDetail = meetingHostService.modifyMeeting(meeting_seq, meetingDetail);
+			return ResponseEntity.ok().body(modifiedMeetingDetail);
+		}
+		catch (Exception e) {
 			e.printStackTrace();
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 
 	@DeleteMapping("/meeting/{meeting_seq}")
-	private void removeMeeting(@PathVariable int meeting_seq) throws Exception{
-		meetingHostService.removeMeeting(meeting_seq);
+	private ResponseEntity<Object> removeMeeting(@PathVariable int meeting_seq) throws Exception{
+
+		try {
+			meetingHostService.removeMeeting(meeting_seq);
+			return ResponseEntity.ok().body(null);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 
 	@GetMapping("/meetings/today") //TODO:추후 검색기능 추가 시 searchvalue 파라미터로 넘겨줘야함
-	private List<MeetingDetailForm> getMeetingsAtToday(HttpServletRequest request, MeetingDetailForm meetingForm) throws Exception{
-		return meetingHostService.selectTodayMeeting(meetingForm);
+	private ResponseEntity<List<MeetingDetailForm>> getMeetingsAtToday(HttpServletRequest request, MeetingDetailForm meetingForm) throws Exception{
+
+		try {
+			return ResponseEntity.ok().body(meetingHostService.selectTodayMeeting(meetingForm));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 }

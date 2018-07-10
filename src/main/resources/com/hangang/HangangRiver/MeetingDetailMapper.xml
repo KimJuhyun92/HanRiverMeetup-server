@@ -8,6 +8,9 @@
 			(activity_seq, user_id, description, participants_cnt, meeting_location, meeting_time, expected_cost, creation_time, modification_time, title, contact)
 		VALUES
 			(#{activity_seq}, #{user_id}, #{description}, #{participants_cnt}, #{meeting_location}, #{meeting_time}, #{expected_cost}, current_timestamp, current_timestamp, #{title},#{contact})
+		<selectKey keyProperty="meeting_seq" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 
 	<select id="detail" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
@@ -74,5 +77,28 @@
 				cmseq IS NULL 
 				AND
 				creation_time BETWEEN #{startTime} AND #{endTime}
+	</select>
+
+	<select id="isDuplicatedDetail" resultType="boolean">
+		SELECT EXISTS (
+			SELECT
+				*
+			FROM
+				meeting
+			WHERE
+				DATE(meeting_time) = DATE(#{meeting_time}) AND
+				user_id = #{user_id}
+		)
+	</select>
+
+	<select id="isExistMeetingDetail" parameterType="int" resultType="boolean">
+		SELECT EXISTS (
+			SELECT
+				*
+			FROM
+				meeting
+			WHERE
+				meeting_seq = #{meeting_seq}
+		)
 	</select>
 </mapper>

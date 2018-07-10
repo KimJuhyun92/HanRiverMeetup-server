@@ -8,6 +8,9 @@
 			(meeting_seq, user_id, participants_cnt, description, contact, application_time)
 		VALUES
 			(#{meeting_seq}, #{user_id}, #{participants_cnt}, #{description}, #{contact}, current_timestamp)
+		<selectKey keyProperty="application_seq" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 
 	<delete id="delete" parameterType="com.hangang.HangangRiver.meeting.model.JoinDetail">
@@ -18,6 +21,15 @@
 			application_seq = #{application_seq}
 	</delete>
 
+	<select id="getJoinDetail" parameterType="int" resultType="com.hangang.HangangRiver.meeting.model.JoinDetail">
+		SELECT
+			*
+		FROM
+			application
+		WHERE
+			application_seq = #{application_seq}
+	</select>
+
 	<select id="getJoinDetails" parameterType="com.hangang.HangangRiver.meeting.model.JoinDetail" resultType="com.hangang.HangangRiver.meeting.model.JoinDetail">
 		SELECT
 			*
@@ -25,5 +37,17 @@
 			application
 		WHERE
 			meeting_seq = #{meeting_seq}
+	</select>
+
+	<select id="isExistJoinDetails" resultType="boolean">
+		SELECT EXISTS(
+			SELECT
+				*
+			FROM
+				application
+			WHERE
+				meeting_seq = #{meeting_seq} AND
+				user_id = #{user_id}
+		)
 	</select>
 </mapper>
