@@ -11,7 +11,7 @@ git pull origin dev;'''
     }
     stage('Stop jar') {
       steps {
-        sh 'pkill -f \'java -jar\';'
+        sh 'pkill -f \'java -jar\' || true;'
       }
     }
     stage('Build using maven') {
