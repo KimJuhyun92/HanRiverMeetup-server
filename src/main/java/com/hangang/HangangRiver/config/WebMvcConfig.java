@@ -14,6 +14,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(interceptor)
 				.addPathPatterns("/**")
-				.excludePathPatterns("/access/**","/swagger-ui.html");
+				.excludePathPatterns("/access/**");
 	}
 }

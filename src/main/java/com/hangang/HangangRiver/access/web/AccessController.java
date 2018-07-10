@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hangang.HangangRiver.access.model.ResFacebookLoginPojo;
 import com.hangang.HangangRiver.access.model.User;
 import com.hangang.HangangRiver.access.service.AccessService;
+import com.hangang.HangangRiver.exceptions.LoginValidateException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,15 +32,16 @@ public class AccessController {
 	AccessService accessService;
 
 	@PostMapping("/loginValidate")
-	private User loginValidate(HttpServletRequest request, @RequestBody User user){
+	private ResponseEntity<User> loginValidate(HttpServletRequest request, @RequestBody User user){
 		try {
-			return submitFacebookLogin(user.getAccess_token());
+			return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			//return null;
 			//return "유효하지 않는 사용자입니다.";
 			//LoginValidateException??
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 
