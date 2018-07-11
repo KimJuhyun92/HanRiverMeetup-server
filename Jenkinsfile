@@ -16,7 +16,9 @@ git pull origin dev;'''
     }
     stage('Build using maven') {
       steps {
-        sh 'mvn package;'
+        sh '''pwd;
+cp /var/www/application.properties ./src/main/resources/application.properties;
+mvn package;'''
       }
     }
     stage('Run application') {
