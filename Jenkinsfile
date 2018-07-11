@@ -24,7 +24,7 @@ mvn package;'''
     stage('Run application') {
       steps {
         sh '''cd target;
-nohup java -jar HangangRiver-0.0.1-SNAPSHOT.jar;'''
+nohup java -jar HangangRiver-0.0.1-SNAPSHOT.jar &;'''
       }
     }
   }
