@@ -49,7 +49,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		System.out.println("================ Before Method");
-		return true;
+		return false;
 	}
 
 	private boolean checkPath(String url, String servletPath) {
