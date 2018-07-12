@@ -3,6 +3,7 @@ package com.hangang.HangangRiver.access.web;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,6 +24,7 @@ import com.hangang.HangangRiver.exceptions.LoginValidateException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 @RestController
 @RequestMapping("/access")
@@ -34,58 +36,67 @@ public class AccessController {
 	@PostMapping("/loginValidate")
 	private ResponseEntity<User> loginValidate(HttpServletRequest request, @RequestBody User user){
 		try {
-			return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token()));
+			return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			//return null;
-			//return "유효하지 않는 사용자입니다.";
-			//LoginValidateException??
 			return ResponseEntity.badRequest().body(null);
 		}
 	}
 
-	private User submitFacebookLogin(String accessToken) throws Exception {
+	private User submitFacebookLogin(String accessToken, String user_id) throws Exception {
+		User faceUser =faceBookUserInfoValidate(accessToken, user_id);
+		User userInfo = null;
+		if (faceUser != null){
+			userInfo = saveUserInfo(faceUser);
+		}
+		return userInfo;
+	}
+
+	public Boolean selectExistUser(User user){
+		return accessService.getUserDetailById(user.getUser_id())!=null;
+	}
+
+	public User faceBookUserInfoValidate(String accessToken, String user_id) throws Exception {
 		BufferedReader in = null;
 		URL obj = new URL("https://graph.facebook.com/me?access_token="+accessToken);
-		try {
-			HttpURLConnection con = (HttpURLConnection)obj.openConnection();
-			con.setRequestMethod("GET");
-			in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
-			String line;
-				while((line = in.readLine()) != null) {
-					System.out.println(line);
-				}
-				JSONParser parser = new JSONParser();
-				Object parseObj = parser.parse( line );
-				JSONObject jsonObj = (JSONObject) parseObj;
-				String user_id = (String) jsonObj.get("user_id");
-				String name = (String) jsonObj.get("name");
-				Boolean existUser = selectExistUser(user_id);//최초로그인인지 확인
-				User user = new User();
-				user.setUser_id(user_id);
-				user.setNickname(name);
-				user.setAccess_token(accessToken);
-				String hangang_token = hashMD5(accessToken+user_id);
-				user.setHangang_token(hangang_token);
-				if (existUser){
-					accessService.createUser(user);//최초로그인이면 insert
-				}else {
-					accessService.modifyUser(user_id, user);//아니면 한강토큰 업뎃
-				}
-				return user;//아이디와 한강토큰
-		}catch (Exception e) {
-			System.out.println("---------------error------------------");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-			//return "유효하지 않는 사용자입니다.";
-			//LoginValidateException??
+		HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+		con.setRequestMethod("GET");
+		in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+		String line;
+		String readLine = null;
+		while((line = in.readLine()) != null) {
+			if (line != null){
+				readLine =line;
+			}
+		}
+		JSONParser parser = new JSONParser();
+		Object parseObj = parser.parse(readLine);
+		JSONObject jsonObj = (JSONObject) parseObj;
+		String face_user_id = (String) jsonObj.get("id");
+		String face_name = (String) jsonObj.get("name");
+		User user = new User();
+		if (user_id.equals(face_user_id)){
+			user.setNickname(face_name);
+			user.setAccess_token(accessToken);
+			user.setUser_id(face_user_id);
+			return user;
+		}else {
+			return user;
 		}
 	}
 
-	public Boolean selectExistUser(String user_id){
-		return accessService.getUserDetailById(user_id)!=null;
+	public User saveUserInfo(User user){
+		Boolean existUser = selectExistUser(user);//최초로그인인지 확인
+		user.setUser_id(user.getUser_id());
+		String hangang_token = hashMD5(user.getAccess_token()+user.getUser_id());
+		user.setHangang_token(hangang_token);
+		if (existUser){
+			accessService.modifyUser(user.getUser_id(), user);//아니면 한강토큰 업뎃
+		}else {
+			accessService.createUser(user);//최초로그인이면 insert
+		}
+		return accessService.getUserDetailById(user.getUser_id());
 	}
 
 	public String hashMD5(String str){

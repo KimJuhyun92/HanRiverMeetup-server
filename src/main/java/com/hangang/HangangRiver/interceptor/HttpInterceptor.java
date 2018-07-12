@@ -49,14 +49,14 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		System.out.println("================ Before Method");
-		return false;
+		return true;
 	}
 
 	private boolean checkPath(String url, String servletPath) {
 		if (servletPath.startsWith(url)) {
 			Matcher matcher = Pattern.compile(url).matcher(servletPath);
 			if (matcher.find()) {;
-				System.out.println("PublicInterceptor Interceptor URL - {}"+url);
+				System.out.println("Interceptor URL - {}"+url);
 				return true;
 			}
 		}
