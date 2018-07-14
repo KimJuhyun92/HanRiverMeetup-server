@@ -30,8 +30,4 @@ public class MeetingGuestService extends MeetingBaseService{
     public void cancleJoin(int application_seq){
         joinDetailMapper.delete(application_seq);
     }
-
-    public List<JoinDetail> getJoinDetailsByMeetingId(int meeting_seq){
-        return joinDetailMapper.getJoinDetails(meeting_seq);
-    }
 }

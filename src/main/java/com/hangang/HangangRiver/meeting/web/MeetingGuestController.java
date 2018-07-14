@@ -30,10 +30,4 @@ public class MeetingGuestController {
         meetingGuestService.cancleJoin(application_seq);
         return ResponseEntity.ok().body(true);
     }
-
-    @GetMapping("/requests/{meeting_seq}")
-    private ResponseEntity<List<JoinDetail>> getJoinRequests(@PathVariable int meeting_seq) throws Exception{
-        List<JoinDetail> requests = meetingGuestService.getJoinDetailsByMeetingId(meeting_seq);
-        return ResponseEntity.ok().body(requests);
-    }
 }
