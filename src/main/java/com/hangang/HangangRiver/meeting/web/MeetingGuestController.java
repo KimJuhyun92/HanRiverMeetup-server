@@ -1,7 +1,8 @@
 package com.hangang.HangangRiver.meeting.web;
 
+import com.hangang.HangangRiver.exceptions.ExistJoinDetailException;
+import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
-import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.service.MeetingGuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,35 +19,21 @@ public class MeetingGuestController {
 
     @PostMapping("/join")
     @ResponseBody
-    private ResponseEntity<JoinDetail> joinMeeting(HttpServletRequest request, @RequestBody JoinDetail joinDetail){
-        try {
-            JoinDetail createdJoinDetail = meetingGuestService.join(joinDetail);
-            return ResponseEntity.ok().body(createdJoinDetail);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(null);
-        }
+    private ResponseEntity<JoinDetail> joinMeeting(HttpServletRequest request, @RequestBody JoinDetail joinDetail)
+            throws ExistJoinDetailException, InvalidMeetingException {
+        JoinDetail createdJoinDetail = meetingGuestService.join(joinDetail);
+        return ResponseEntity.ok().body(createdJoinDetail);
     }
 
     @DeleteMapping("/request/{application_seq}")
     private ResponseEntity<Object> remove(@PathVariable int application_seq) throws Exception{
-        try {
-            meetingGuestService.cancleJoin(application_seq);
-            return ResponseEntity.ok().body(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(false);
-        }
+        meetingGuestService.cancleJoin(application_seq);
+        return ResponseEntity.ok().body(true);
     }
 
     @GetMapping("/requests/{meeting_seq}")
     private ResponseEntity<List<JoinDetail>> getJoinRequests(@PathVariable int meeting_seq) throws Exception{
-        try{
-            List<JoinDetail> requests = meetingGuestService.getJoinDetailsByMeetingId(meeting_seq);
-            return ResponseEntity.ok().body(requests);
-        }catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(null);
-        }
+        List<JoinDetail> requests = meetingGuestService.getJoinDetailsByMeetingId(meeting_seq);
+        return ResponseEntity.ok().body(requests);
     }
 }

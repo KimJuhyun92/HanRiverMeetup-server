@@ -3,7 +3,6 @@ package com.hangang.HangangRiver.access.web;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,14 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hangang.HangangRiver.access.model.ResFacebookLoginPojo;
 import com.hangang.HangangRiver.access.model.User;
 import com.hangang.HangangRiver.access.service.AccessService;
-import com.hangang.HangangRiver.exceptions.LoginValidateException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 @RestController
 @RequestMapping("/access")
@@ -34,17 +30,13 @@ public class AccessController {
 	AccessService accessService;
 
 	@PostMapping("/loginValidate")
-	private ResponseEntity<User> loginValidate(HttpServletRequest request, @RequestBody User user){
-		try {
-			return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id()));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(null);
-		}
+	private ResponseEntity<User> loginValidate(HttpServletRequest request, @RequestBody User user)
+			throws Exception {
+		return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id()));
 	}
 
-	private User submitFacebookLogin(String accessToken, String user_id) throws Exception {
+	private User submitFacebookLogin(String accessToken, String user_id)
+			throws Exception {
 		User faceUser =faceBookUserInfoValidate(accessToken, user_id);
 		User userInfo = null;
 		if (faceUser != null){
@@ -57,7 +49,8 @@ public class AccessController {
 		return accessService.getUserDetailById(user.getUser_id())!=null;
 	}
 
-	public User faceBookUserInfoValidate(String accessToken, String user_id) throws Exception {
+	public User faceBookUserInfoValidate(String accessToken, String user_id)
+			throws Exception {
 		BufferedReader in = null;
 		URL obj = new URL("https://graph.facebook.com/me?access_token="+accessToken);
 		HttpURLConnection con = (HttpURLConnection)obj.openConnection();
@@ -116,5 +109,4 @@ public class AccessController {
 		}
 		return MD5;
 	}
-
 }
