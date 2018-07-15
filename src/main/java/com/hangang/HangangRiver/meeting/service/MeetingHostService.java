@@ -2,6 +2,7 @@ package com.hangang.HangangRiver.meeting.service;
 
 import com.hangang.HangangRiver.exceptions.DuplicatedMeetingException;
 import com.hangang.HangangRiver.meeting.dao.MeetingDetailMapper;
+import com.hangang.HangangRiver.meeting.model.JoinDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetailForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,9 @@ public class MeetingHostService extends MeetingBaseService {
         meetingForm.setStartTime(time+" 00:00:00");
         meetingForm.setEndTime(time+" 23:59:59");
         return meetingDetailMapper.selectAll(meetingForm);
+    }
+
+    public List<JoinDetail> getJoinDetailsByMeetingId(int meeting_seq){
+        return joinDetailMapper.getJoinDetails(meeting_seq);
     }
 }

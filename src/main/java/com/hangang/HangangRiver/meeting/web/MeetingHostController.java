@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.hangang.HangangRiver.exceptions.DuplicatedMeetingException;
+import com.hangang.HangangRiver.meeting.model.JoinDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetailForm;
 import com.hangang.HangangRiver.meeting.service.MeetingHostService;
@@ -52,5 +53,12 @@ public class MeetingHostController {
 	@GetMapping("/meetings/today") //TODO:추후 검색기능 추가 시 searchvalue 파라미터로 넘겨줘야함
 	private ResponseEntity<List<MeetingDetailForm>> getMeetingsAtToday(HttpServletRequest request, MeetingDetailForm meetingForm) throws Exception{
 		return ResponseEntity.ok().body(meetingHostService.selectTodayMeeting(meetingForm));
+	}
+
+
+	@GetMapping("/requests/{meeting_seq}")
+	private ResponseEntity<List<JoinDetail>> getJoinRequests(@PathVariable int meeting_seq) throws Exception{
+		List<JoinDetail> requests = meetingHostService.getJoinDetailsByMeetingId(meeting_seq);
+		return ResponseEntity.ok().body(requests);
 	}
 }
