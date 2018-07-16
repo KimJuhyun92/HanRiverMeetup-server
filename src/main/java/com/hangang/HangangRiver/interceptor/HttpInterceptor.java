@@ -12,6 +12,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.hangang.HangangRiver.access.model.User;
 import com.hangang.HangangRiver.access.service.AccessService;
+import com.hangang.HangangRiver.exceptions.LoginValidateException;
 @Component
 public class HttpInterceptor extends HandlerInterceptorAdapter {
 
@@ -19,7 +20,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 	private AccessService accessService;
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String servletPath = request.getServletPath();
 
 		if (checkPath("/swagger", servletPath)) {
@@ -49,7 +50,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		System.out.println("================ Before Method");
-		return false;
+		throw new LoginValidateException();
 	}
 
 	private boolean checkPath(String url, String servletPath) {
