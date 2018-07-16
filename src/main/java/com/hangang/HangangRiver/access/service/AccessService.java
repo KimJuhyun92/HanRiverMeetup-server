@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.hangang.HangangRiver.access.dao.AccessMapper;
 import com.hangang.HangangRiver.access.model.User;
+import com.hangang.HangangRiver.exceptions.ExistJoinDetailException;
+import com.hangang.HangangRiver.exceptions.ExistUserNickNameException;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 
 @Service
@@ -23,5 +25,13 @@ public class AccessService {
 
     public void modifyUser(String user_id, User user){
     	accessMapper.update(user_id, user);
+    }
+
+    public User registUser(String user_id, User user) throws ExistUserNickNameException{
+        if(accessMapper.isExistNickname(user.getNickname())) {
+            throw new ExistUserNickNameException();
+        }
+    	accessMapper.update(user_id, user);
+    	return user;
     }
 }

@@ -53,6 +53,12 @@ public class ExceptionController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = ExistUserNickNameException.class)
+    public String handleBaseException(ExistUserNickNameException e){
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = Exception.class)
     public String handleBaseException(Exception e){
         return "서버에서 예외가 발생했습니다. 확인해주세요";

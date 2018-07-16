@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hangang.HangangRiver.access.model.User;
 import com.hangang.HangangRiver.access.service.AccessService;
+import com.hangang.HangangRiver.exceptions.ExistUserNickNameException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -35,19 +36,22 @@ public class AccessController {
 		return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id()));
 	}
 
+	@PostMapping("/registUser")
+	private ResponseEntity<User> registUser(HttpServletRequest request, @RequestBody User user)
+			throws ExistUserNickNameException {
+		return ResponseEntity.ok().body(accessService.registUser(user.getUser_id(), user));
+	}
+
 	private User submitFacebookLogin(String accessToken, String user_id)
 			throws Exception {
-		User faceUser =faceBookUserInfoValidate(accessToken, user_id);
+		User faceUser =faceBookUserInfoValidate(accessToken, user_id);//페북에 한번더 검증 요청
 		User userInfo = null;
-		if (faceUser != null){
+		if (faceUser != null){//검증된 경우
 			userInfo = saveUserInfo(faceUser);
 		}
 		return userInfo;
 	}
 
-	public Boolean selectExistUser(User user){
-		return accessService.getUserDetailById(user.getUser_id())!=null;
-	}
 
 	public User faceBookUserInfoValidate(String accessToken, String user_id)
 			throws Exception {
@@ -67,10 +71,10 @@ public class AccessController {
 		Object parseObj = parser.parse(readLine);
 		JSONObject jsonObj = (JSONObject) parseObj;
 		String face_user_id = (String) jsonObj.get("id");
-		String face_name = (String) jsonObj.get("name");
+		//String face_name = (String) jsonObj.get("name");
 		User user = new User();
 		if (user_id.equals(face_user_id)){
-			user.setNickname(face_name);
+			//user.setNickname(face_name);
 			user.setAccess_token(accessToken);
 			user.setUser_id(face_user_id);
 			return user;
@@ -90,6 +94,10 @@ public class AccessController {
 			accessService.createUser(user);//최초로그인이면 insert
 		}
 		return accessService.getUserDetailById(user.getUser_id());
+	}
+
+	public Boolean selectExistUser(User user){
+		return accessService.getUserDetailById(user.getUser_id())!=null;
 	}
 
 	public String hashMD5(String str){
