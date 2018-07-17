@@ -101,4 +101,13 @@
 				meeting_seq = #{meeting_seq}
 		)
 	</select>
+
+	<select id="selectMyMeetings" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
+		SELECT
+			*
+		FROM
+			meeting
+		Where
+			user_id = #{user_id}
+	</select>
 </mapper>
