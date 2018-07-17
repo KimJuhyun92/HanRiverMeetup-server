@@ -40,4 +40,14 @@
 			user_id = #{user_id}
 	</update>
 
+	<select id="isExistNickname" parameterType="string" resultType="boolean">
+		SELECT EXISTS (
+			SELECT
+				*
+			FROM
+				user
+			WHERE
+				nickname = #{nickname}
+		)
+	</select>
 </mapper>
