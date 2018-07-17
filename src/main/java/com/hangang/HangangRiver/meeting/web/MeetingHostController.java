@@ -66,11 +66,9 @@ public class MeetingHostController {
 	@ResponseBody
 	private ResponseEntity<List<MeetingDetail>> getMyMeetings(@PathVariable String user_id) throws DuplicatedMeetingException {
 		List<MeetingDetail> myMeetingList = meetingHostService.getMeetingsDetailById(user_id);
-
 		if(myMeetingList != null){
 			return ResponseEntity.ok().body(myMeetingList);
 		}
-
 		return ResponseEntity.badRequest().body(null);
 	}
 }
