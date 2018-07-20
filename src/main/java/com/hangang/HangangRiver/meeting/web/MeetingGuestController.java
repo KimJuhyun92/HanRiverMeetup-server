@@ -1,8 +1,10 @@
 package com.hangang.HangangRiver.meeting.web;
 
+import com.hangang.HangangRiver.exceptions.DuplicatedMeetingException;
 import com.hangang.HangangRiver.exceptions.ExistJoinDetailException;
 import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
+import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.service.MeetingGuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,4 +32,14 @@ public class MeetingGuestController {
         meetingGuestService.cancleJoin(application_seq);
         return ResponseEntity.ok().body(true);
     }
+
+	@GetMapping("/applications/{user_id}")
+	@ResponseBody
+	private ResponseEntity<List<JoinDetail>> getMyApplications(@PathVariable String user_id) throws DuplicatedMeetingException {
+		List<JoinDetail> myApplicationList = meetingGuestService.getApplicationsDetailById(user_id);
+		if(myApplicationList != null){
+			return ResponseEntity.ok().body(myApplicationList);
+		}
+		return ResponseEntity.badRequest().body(null);
+	}
 }

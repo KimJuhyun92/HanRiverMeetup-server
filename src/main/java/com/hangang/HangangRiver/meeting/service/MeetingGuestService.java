@@ -3,6 +3,8 @@ package com.hangang.HangangRiver.meeting.service;
 import com.hangang.HangangRiver.exceptions.ExistJoinDetailException;
 import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
+import com.hangang.HangangRiver.meeting.model.MeetingDetail;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +31,9 @@ public class MeetingGuestService extends MeetingBaseService{
 
     public void cancleJoin(int application_seq){
         joinDetailMapper.delete(application_seq);
+    }
+
+    public List<JoinDetail> getApplicationsDetailById(String user_id){
+        return joinDetailMapper.selectMyApplications(user_id);
     }
 }

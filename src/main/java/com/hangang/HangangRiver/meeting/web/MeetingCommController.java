@@ -68,4 +68,11 @@ public class MeetingCommController {
         meetingCommService.unmatch(contact_seq);
         return ResponseEntity.ok().body(true);
     }
+
+/*    @GetMapping("/successMatch/{user_id}")
+    private ResponseEntity<ContactedMeeting> successMatch(@PathVariable int contact_seq) {
+        ContactedMeeting contactedMeeting = meetingCommService.getContactedMeetingById(contact_seq);
+        return ResponseEntity.ok().body(contactedMeeting);
+    }*/
+    //완료된것인지???완료된 기준??하루지남?매칭됨?
 }

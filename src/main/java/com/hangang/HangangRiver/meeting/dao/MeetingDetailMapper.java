@@ -18,4 +18,5 @@ public interface MeetingDetailMapper {
 	boolean isDuplicatedDetail(@Param("meeting_time") Date meeting_time,
 							   @Param("user_id") String user_id);
 	boolean isExistMeetingDetail(int meeting_seq);
+	List<MeetingDetail> selectMyMeetings(String user_id);
 }
