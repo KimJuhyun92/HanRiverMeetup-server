@@ -35,8 +35,8 @@ public class MeetingGuestController {
 
 	@GetMapping("/applications/{user_id}")
 	@ResponseBody
-	private ResponseEntity<List<JoinDetail>> getMyApplications(@PathVariable String user_id) throws DuplicatedMeetingException {
-		List<JoinDetail> myApplicationList = meetingGuestService.getApplicationsDetailById(user_id);
+	private ResponseEntity<List<MeetingDetail>> getMyApplications(@PathVariable String user_id) throws DuplicatedMeetingException {
+		List<MeetingDetail> myApplicationList = meetingGuestService.getApplicationsDetailById(user_id);
 		if(myApplicationList != null){
 			return ResponseEntity.ok().body(myApplicationList);
 		}

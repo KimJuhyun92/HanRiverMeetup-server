@@ -51,12 +51,15 @@
 		)
 	</select>
 
-	<select id="selectMyApplications" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.JoinDetail">
+	<select id="selectMyApplications" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
-			*
+			meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
 		FROM
-			application
+			application.application, meeting 
 		Where
-			user_id = #{user_id}
+			application.user_id = #{user_id}
+		AND
+			application.meeting_seq = meeting.meeting_seq
+		ORDER BY meeting.creation_time DESC
 	</select>
 </mapper>

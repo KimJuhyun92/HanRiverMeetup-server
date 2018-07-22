@@ -48,4 +48,62 @@
 				meeting_seq = #{meeting_seq}
 		)
 	</select>
+
+
+<!-- 	<select id="selectMyMatchingMeetings" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
+		SELECT
+			meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost
+		FROM
+			contacted_meeting, meeting
+		WHERE
+			meeting.user_id = #{user_id}
+		AND
+			contacted_meeting.meeting_seq = meeting.meeting_seq
+	</select>
+
+	<select id="selectMyMatchingApplications" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
+		SELECT
+			meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost
+		FROM meeting,
+			(SELECT
+				contacted_meeting.meeting_seq
+			FROM
+				contacted_meeting, application
+			WHERE
+				contacted_meeting.application_seq = application.application_seq
+			AND
+				application.user_id = #{user_id})as matching
+		WHERE
+			meeting.meeting_seq = matching.meeting_seq
+	</select> -->
+
+	<select id="selectMyMatchings" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
+		SELECT
+			*
+		FROM
+			(SELECT
+				meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
+			FROM
+				meeting,
+				(SELECT
+					contacted_meeting.meeting_seq
+				FROM
+					contacted_meeting, application
+				WHERE
+					contacted_meeting.application_seq = application.application_seq
+				AND
+					application.user_id = #{user_id})as matching
+			WHERE
+				meeting.meeting_seq = matching.meeting_seq)as result
+			union
+				(SELECT
+					meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
+				FROM
+					contacted_meeting, meeting
+				WHERE
+					meeting.user_id = #{user_id}
+				AND
+					contacted_meeting.meeting_seq = meeting.meeting_seq)
+		ORDER BY creation_time DESC
+	</select>
 </mapper>

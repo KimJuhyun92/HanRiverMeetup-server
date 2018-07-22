@@ -14,5 +14,5 @@ public interface JoinDetailMapper {
 	public List<JoinDetail> getJoinDetails(int meeting_seq);
 	boolean isExistJoinDetails(@Param("meeting_seq") int meeting_seq,
 							   @Param("user_id") String user_id);
-	List<JoinDetail> selectMyApplications(String user_id);
+	List<MeetingDetail> selectMyApplications(String user_id);
 }

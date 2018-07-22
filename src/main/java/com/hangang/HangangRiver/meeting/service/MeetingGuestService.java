@@ -33,7 +33,7 @@ public class MeetingGuestService extends MeetingBaseService{
         joinDetailMapper.delete(application_seq);
     }
 
-    public List<JoinDetail> getApplicationsDetailById(String user_id){
+    public List<MeetingDetail> getApplicationsDetailById(String user_id){
         return joinDetailMapper.selectMyApplications(user_id);
     }
 }
