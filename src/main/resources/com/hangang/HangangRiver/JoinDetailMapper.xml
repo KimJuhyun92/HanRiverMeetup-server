@@ -55,11 +55,12 @@
 		SELECT
 			meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
 		FROM
-			application.application, meeting 
+			application, meeting, contacted_meeting
 		Where
 			application.user_id = #{user_id}
 		AND
 			application.meeting_seq = meeting.meeting_seq
-		ORDER BY meeting.creation_time DESC
+		and 
+			contacted_meeting.application_seq != application.application_seq
 	</select>
 </mapper>

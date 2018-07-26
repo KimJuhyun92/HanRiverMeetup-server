@@ -73,21 +73,7 @@ public class MeetingCommController {
 
     @GetMapping("/matchings/{user_id}")
     private ResponseEntity<List<MeetingDetail>> getMyMatchings(@PathVariable String user_id) {
-/*		List<MeetingDetail> myMatchingList = meetingCommService.selectMyMatchings(user_id);
-		if(myMatchingList != null){
-			return ResponseEntity.ok().body(myMatchingList);
-		}
-		return ResponseEntity.badRequest().body(null);*/
-		try {
-			List<MeetingDetail> myMatchingList = meetingCommService.selectMyMatchings(user_id);
-			System.out.println(myMatchingList);
-			if(myMatchingList != null){
-				return ResponseEntity.ok().body(myMatchingList);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(null);
-		}
-		return ResponseEntity.badRequest().body(null);
+		List<MeetingDetail> myMatchingList = meetingCommService.selectMyMatchings(user_id);
+		return ResponseEntity.ok().body(myMatchingList);
     }
 }
