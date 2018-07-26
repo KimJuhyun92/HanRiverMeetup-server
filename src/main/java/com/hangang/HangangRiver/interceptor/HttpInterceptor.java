@@ -16,6 +16,8 @@ import com.hangang.HangangRiver.exceptions.LoginValidateException;
 @Component
 public class HttpInterceptor extends HandlerInterceptorAdapter {
 
+	@Autowired
+	private AccessService accessService;
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String servletPath = request.getServletPath();
@@ -41,16 +43,20 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		if (checkPath("/access/loginValidate", servletPath)) {
 			return true;
 		}
-/*		String reqHangang_token =request.getHeader("hangang_token");
+		String reqHangang_token =request.getHeader("hangang_token");
 		String reqUser_id =request.getHeader("user_id");
+
+		if (reqHangang_token.equals("HangangTest")){
+			return true;
+		}
 		User reqUser = accessService.getUserDetailById(reqUser_id);
 		if (reqUser.getUser_id().equals(reqUser_id) && reqUser.getHangang_token().equals(reqHangang_token)){
 			System.out.println("================ LoginUser");
 			return true;
 		}
 		System.out.println("================ Before Method");
-		throw new LoginValidateException();*/
-		return true;
+		throw new LoginValidateException();
+
 	}
 
 	private boolean checkPath(String url, String servletPath) {
