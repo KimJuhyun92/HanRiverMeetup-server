@@ -108,7 +108,7 @@
 		FROM
 			meeting, contacted_meeting
 		WHERE
-			user_id = #{user_id}
+			meeting.user_id = #{user_id}
 		and 
 			meeting.meeting_seq != contacted_meeting.meeting_seq
 		ORDER BY meeting.creation_time DESC
