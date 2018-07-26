@@ -5,6 +5,8 @@ import com.hangang.HangangRiver.exceptions.InvalidMatchingInfoException;
 import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
 import com.hangang.HangangRiver.meeting.model.Comment;
 import com.hangang.HangangRiver.meeting.model.ContactedMeeting;
+import com.hangang.HangangRiver.meeting.model.JoinDetail;
+import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.service.MeetingCommService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,10 +71,9 @@ public class MeetingCommController {
         return ResponseEntity.ok().body(true);
     }
 
-/*    @GetMapping("/successMatch/{user_id}")
-    private ResponseEntity<ContactedMeeting> successMatch(@PathVariable int contact_seq) {
-        ContactedMeeting contactedMeeting = meetingCommService.getContactedMeetingById(contact_seq);
-        return ResponseEntity.ok().body(contactedMeeting);
-    }*/
-    //완료된것인지???완료된 기준??하루지남?매칭됨?
+    @GetMapping("/matchings/{user_id}")
+    private ResponseEntity<List<MeetingDetail>> getMyMatchings(@PathVariable String user_id) {
+		List<MeetingDetail> myMatchingList = meetingCommService.selectMyMatchings(user_id);
+		return ResponseEntity.ok().body(myMatchingList);
+    }
 }

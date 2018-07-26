@@ -6,6 +6,8 @@ import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
 import com.hangang.HangangRiver.meeting.model.Comment;
 import com.hangang.HangangRiver.meeting.model.ContactedMeeting;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
+import com.hangang.HangangRiver.meeting.model.MeetingDetail;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,5 +68,15 @@ public class MeetingCommService extends MeetingBaseService{
         matchingMapper.delete(contact_seq);
     }
 
-    // TODO : User ID에 따른 모든 매칭된 미팅들을 가지고 와야할듯?
+/*    public List<MeetingDetail> selectMyMatchingMeetings(String user_id){
+        return matchingMapper.selectMyMatchingMeetings(user_id);
+    }
+
+    public List<MeetingDetail> selectMyMatchingApplications(String user_id){
+        return matchingMapper.selectMyMatchingApplications(user_id);
+    }*/
+
+    public List<MeetingDetail> selectMyMatchings(String user_id){
+        return matchingMapper.selectMyMatchings(user_id);
+    }
 }

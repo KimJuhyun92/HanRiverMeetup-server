@@ -51,12 +51,16 @@
 		)
 	</select>
 
-	<select id="selectMyApplications" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.JoinDetail">
+	<select id="selectMyApplications" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
-			*
+			meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
 		FROM
-			application
+			application, meeting, contacted_meeting
 		Where
-			user_id = #{user_id}
+			application.user_id = #{user_id}
+		AND
+			application.meeting_seq = meeting.meeting_seq
+		and 
+			contacted_meeting.application_seq != application.application_seq
 	</select>
 </mapper>
