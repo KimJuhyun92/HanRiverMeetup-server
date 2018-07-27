@@ -67,15 +67,15 @@
 
 	<select id="selectAll" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
-			mmseq as meeting_seq, creation_time
+			mmseq as meeting_seq, creation_time, activity_seq, user_id, meeting_time, participants_cnt, expected_cost, title, meeting_location
 		FROM
 			(SELECT
-				m.meeting_seq AS mmseq, c.meeting_seq AS cmseq, m.creation_time
+				m.meeting_seq AS mmseq, c.meeting_seq AS cmseq, m.creation_time, m.activity_seq, m.user_id, m.meeting_time, m.participants_cnt, m.expected_cost, m.title, m.meeting_location
 			FROM
 				meeting m LEFT JOIN contacted_meeting c ON m.meeting_seq = c.meeting_seq) test
 			WHERE
-				cmseq IS NULL 
-				AND
+				cmseq IS NULL
+			AND
 				creation_time BETWEEN #{startTime} AND #{endTime}
 	</select>
 
