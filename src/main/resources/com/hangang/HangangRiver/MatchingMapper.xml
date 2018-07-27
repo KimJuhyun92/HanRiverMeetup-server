@@ -82,7 +82,7 @@
 			*
 		FROM
 			(SELECT
-				meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
+				meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time, 'guest' as user_type
 			FROM
 				meeting,
 				(SELECT
@@ -97,7 +97,7 @@
 				meeting.meeting_seq = matching.meeting_seq)as result
 			union
 				(SELECT
-					meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
+					meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time, 'host' as user_type
 				FROM
 					contacted_meeting, meeting
 				WHERE

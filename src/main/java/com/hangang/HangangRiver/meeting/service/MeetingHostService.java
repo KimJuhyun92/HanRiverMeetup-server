@@ -40,8 +40,8 @@ public class MeetingHostService extends MeetingBaseService {
     }
 
     public void removeMeeting(int meeting_seq){
-        MeetingDetail meetingDetail = meetingDetailMapper.detail(meeting_seq);
-        meetingDetailMapper.move(meetingDetail);
+        //MeetingDetail meetingDetail = meetingDetailMapper.detail(meeting_seq);
+        //meetingDetailMapper.move(meetingDetail);
         meetingDetailMapper.delete(meeting_seq);
     }
 

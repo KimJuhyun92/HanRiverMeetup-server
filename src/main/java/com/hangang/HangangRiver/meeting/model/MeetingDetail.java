@@ -1,6 +1,6 @@
 package com.hangang.HangangRiver.meeting.model;
 
-import java.sql.Timestamp;
+
 import java.util.Date;
 
 
