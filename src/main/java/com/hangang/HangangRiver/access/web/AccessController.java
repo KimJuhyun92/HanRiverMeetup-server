@@ -33,8 +33,7 @@ public class AccessController {
 	@PostMapping("/loginValidate")
 	private ResponseEntity<User> loginValidate(HttpServletRequest request, @RequestBody User user)
 			throws Exception {
-		throw new Exception("test");
-		//return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id()));
+		return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id()));
 	}
 
 	@PostMapping("/registUser")

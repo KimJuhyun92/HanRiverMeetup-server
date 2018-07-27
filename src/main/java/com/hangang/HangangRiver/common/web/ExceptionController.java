@@ -73,7 +73,7 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = Exception.class)
     public String handleBaseException(Exception e){
-        logger.error("test");
+        logger.error(e.getMessage(), e);
         return "서버에서 예외가 발생했습니다. 확인해주세요";
     }
 }
