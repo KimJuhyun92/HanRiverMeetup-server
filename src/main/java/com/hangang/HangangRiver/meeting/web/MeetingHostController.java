@@ -22,7 +22,7 @@ public class MeetingHostController {
 	@PostMapping("/meeting")
 	@ResponseBody
 	private ResponseEntity<MeetingDetail> createMeeting(HttpServletRequest request, @RequestBody MeetingDetail meetingDetail) throws Exception {
-			MeetingDetail createdMeetingDetail = meetingHostService.createMeeting(meetingDetail);
+		MeetingDetail createdMeetingDetail = meetingHostService.createMeeting(meetingDetail);
 		return ResponseEntity.ok().body(createdMeetingDetail);
 	}
 
