@@ -10,6 +10,15 @@ public class JoinDetail {
 	private int participants_cnt;
 	private Date application_time;
 	private String contact;
+	private int contact_seq;
+
+	public int getContact_seq() {
+		return contact_seq;
+	}
+
+	public void setContact_seq(int contact_seq) {
+		this.contact_seq = contact_seq;
+	}
 
 	public int getApplication_seq() {
 		return application_seq;

@@ -22,15 +22,8 @@ public class MeetingHostController {
 	@PostMapping("/meeting")
 	@ResponseBody
 	private ResponseEntity<MeetingDetail> createMeeting(HttpServletRequest request, @RequestBody MeetingDetail meetingDetail) throws Exception {
-		try {
 			MeetingDetail createdMeetingDetail = meetingHostService.createMeeting(meetingDetail);
-			return null;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return null;
-		}
-		//return ResponseEntity.ok().body(createdMeetingDetail);
+		return ResponseEntity.ok().body(createdMeetingDetail);
 	}
 
 	@GetMapping("/meeting/{meeting_seq}")

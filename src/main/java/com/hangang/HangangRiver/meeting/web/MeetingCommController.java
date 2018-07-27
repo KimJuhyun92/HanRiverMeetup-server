@@ -77,9 +77,4 @@ public class MeetingCommController {
 		return ResponseEntity.ok().body(myMatchingList);
     }
 
-/*    @DeleteMapping("/match/{user_id}/{user_type}/{meeting_seq}")
-    private ResponseEntity<Object> remove(@PathVariable String user_id, @PathVariable String user_type) throws Exception{
-    	meetingCommService.removeMatching();
-        return ResponseEntity.ok().body(true);
-    }아이디와 유저타입을 가지고 호스트라면 미팅 seq를 지우면되고 게스트라면 미팅seq와 아이디를 어플리케이션디비에서 검색해서 ??정의가안됨..*/
 }
