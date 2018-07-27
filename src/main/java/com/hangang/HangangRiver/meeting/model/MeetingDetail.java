@@ -1,6 +1,6 @@
 package com.hangang.HangangRiver.meeting.model;
 
-import java.sql.Timestamp;
+
 import java.util.Date;
 
 
@@ -22,6 +22,15 @@ public class MeetingDetail {
 	private Date modification_time;
 	private String title;
 	private String contact;
+	private int contact_seq;
+
+	public int getContact_seq() {
+		return contact_seq;
+	}
+
+	public void setContact_seq(int contact_seq) {
+		this.contact_seq = contact_seq;
+	}
 
 	public String getContact() {
 		return contact;

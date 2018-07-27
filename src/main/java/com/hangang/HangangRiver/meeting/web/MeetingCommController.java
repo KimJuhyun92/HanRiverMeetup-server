@@ -76,4 +76,5 @@ public class MeetingCommController {
 		List<MeetingDetail> myMatchingList = meetingCommService.selectMyMatchings(user_id);
 		return ResponseEntity.ok().body(myMatchingList);
     }
+
 }

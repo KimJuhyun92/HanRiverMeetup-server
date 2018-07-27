@@ -82,11 +82,11 @@
 			*
 		FROM
 			(SELECT
-				meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
+				meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time, matching.contact_seq
 			FROM
 				meeting,
 				(SELECT
-					contacted_meeting.meeting_seq
+					contacted_meeting.meeting_seq, contacted_meeting.contact_seq
 				FROM
 					contacted_meeting, application
 				WHERE
@@ -97,7 +97,7 @@
 				meeting.meeting_seq = matching.meeting_seq)as result
 			union
 				(SELECT
-					meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
+					meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time, contacted_meeting.contact_seq
 				FROM
 					contacted_meeting, meeting
 				WHERE

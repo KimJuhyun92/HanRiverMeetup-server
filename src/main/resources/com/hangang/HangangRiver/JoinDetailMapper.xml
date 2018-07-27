@@ -60,7 +60,7 @@
 			application.user_id = #{user_id}
 		AND
 			application.meeting_seq = meeting.meeting_seq
-		and 
+		AND
 			contacted_meeting.application_seq != application.application_seq
 	</select>
 </mapper>
