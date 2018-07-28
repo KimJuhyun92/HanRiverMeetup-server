@@ -29,6 +29,15 @@
 			meeting_seq = #{meeting_seq} AND application_seq = #{application_seq}
 	</select>
 
+	<select id="detailByMeetingSeq" parameterType="int" resultType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
+		SELECT
+			*
+		FROM
+			contacted_meeting
+		WHERE
+			meeting_seq = #{meeting_seq}
+	</select>
+
 
 	<delete id="delete" parameterType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
 		DELETE

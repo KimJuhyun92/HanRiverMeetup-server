@@ -39,6 +39,15 @@
 			meeting_seq = #{meeting_seq}
 	</select>
 
+	<select id="getJoinDetailsByUserId" parameterType="String" resultType="com.hangang.HangangRiver.meeting.model.JoinDetail">
+		SELECT
+			*
+		FROM
+			application
+		WHERE
+			user_id = #{user_id}
+	</select>
+
 	<select id="isExistJoinDetails" resultType="boolean">
 		SELECT EXISTS(
 			SELECT

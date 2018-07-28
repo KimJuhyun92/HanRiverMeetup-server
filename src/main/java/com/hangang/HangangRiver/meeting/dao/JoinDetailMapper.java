@@ -8,10 +8,11 @@ import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import org.apache.ibatis.annotations.Param;
 
 public interface JoinDetailMapper {
-	public void insert(JoinDetail joinDetail);
-	public void delete(int application_seq);
-	public JoinDetail getJoinDetail(int application_seq);
-	public List<JoinDetail> getJoinDetails(int meeting_seq);
+	void insert(JoinDetail joinDetail);
+	void delete(int application_seq);
+	JoinDetail getJoinDetail(int application_seq);
+	List<JoinDetail> getJoinDetails(int meeting_seq);
+	List<JoinDetail> getJoinDetailsByUserId(String user_id);
 	boolean isExistJoinDetails(@Param("meeting_seq") int meeting_seq,
 							   @Param("user_id") String user_id);
 	List<MeetingDetail> selectMyApplications(String user_id);
