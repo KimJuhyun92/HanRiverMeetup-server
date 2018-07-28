@@ -104,13 +104,13 @@
 
 	<select id="selectMyMeetings" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
-			meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
+			 meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
 		FROM
-			meeting, contacted_meeting
+			meeting left join contacted_meeting on meeting.meeting_seq = contacted_meeting.meeting_seq 
 		WHERE
+			contacted_meeting.meeting_seq is null
+		AND
 			meeting.user_id = #{user_id}
-		and 
-			meeting.meeting_seq != contacted_meeting.meeting_seq
-		ORDER BY meeting.creation_time DESC
+        ORDER BY meeting.creation_time DESC
 	</select>
 </mapper>
