@@ -40,4 +40,12 @@ public class MyPageService extends MeetingBaseService{
 
         return hopeMeetingList;
     }
+
+    public List<MeetingDetail> getMyMatchings(String user_id){
+        return matchingMapper.selectMyMatchings(user_id);
+    }
+
+    public List<MeetingDetail> getMyMeetings(String user_id){
+        return meetingDetailMapper.selectMyMeetings(user_id);
+    }
 }

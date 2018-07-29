@@ -75,8 +75,4 @@ public class MeetingCommService extends MeetingBaseService{
     public List<MeetingDetail> selectMyMatchingApplications(String user_id){
         return matchingMapper.selectMyMatchingApplications(user_id);
     }*/
-
-    public List<MeetingDetail> selectMyMatchings(String user_id){
-        return matchingMapper.selectMyMatchings(user_id);
-    }
 }

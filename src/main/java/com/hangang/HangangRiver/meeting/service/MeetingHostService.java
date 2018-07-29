@@ -58,8 +58,4 @@ public class MeetingHostService extends MeetingBaseService {
     public List<JoinDetail> getJoinDetailsByMeetingId(int meeting_seq){
         return joinDetailMapper.getJoinDetails(meeting_seq);
     }
-
-    public List<MeetingDetail> getMeetingsDetailById(String user_id){
-        return meetingDetailMapper.selectMyMeetings(user_id);
-    }
 }
