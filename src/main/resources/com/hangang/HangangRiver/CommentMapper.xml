@@ -23,10 +23,12 @@
 
 	<select id="selectCommentList" parameterType="com.hangang.HangangRiver.meeting.model.Comment" resultType="com.hangang.HangangRiver.meeting.model.Comment">
 		SELECT
-			*
-		FROM
-			comment
+			comment.*, user.nickname
+		FROM 
+			comment, user
 		WHERE
+			comment.user_id = user.user_id
+		AND
 			meeting_seq = #{meeting_seq}
 	</select>
 </mapper>
