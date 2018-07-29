@@ -22,15 +22,15 @@ public class MyPageController {
     }
 
     @GetMapping("/{userID}/matchings")
-    private ResponseEntity<List<MeetingDetail>> getMyMatchings(@PathVariable String user_id) {
-        List<MeetingDetail> myMatchingList = myPageService.getMyMatchings(user_id);
+    private ResponseEntity<List<MeetingDetail>> getMyMatchings(@PathVariable String userID) {
+        List<MeetingDetail> myMatchingList = myPageService.getMyMatchings(userID);
         return ResponseEntity.ok().body(myMatchingList);
     }
 
-    @GetMapping("/{user_id}/meetings")
+    @GetMapping("/{userID}/meetings")
     @ResponseBody
-    private ResponseEntity<List<MeetingDetail>> getMyMeetings(@PathVariable String user_id) throws DuplicatedMeetingException {
-        List<MeetingDetail> myMeetingList = myPageService.getMyMeetings(user_id);
+    private ResponseEntity<List<MeetingDetail>> getMyMeetings(@PathVariable String userID) throws DuplicatedMeetingException {
+        List<MeetingDetail> myMeetingList = myPageService.getMyMeetings(userID);
         if(myMeetingList != null){
             return ResponseEntity.ok().body(myMeetingList);
         }
