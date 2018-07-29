@@ -48,4 +48,8 @@ public class MyPageService extends MeetingBaseService{
     public List<MeetingDetail> getMyMeetings(String user_id){
         return meetingDetailMapper.selectMyMeetings(user_id);
     }
+
+    public ContactedMeeting getContactInformation(int meeting_seq){
+    	return matchingMapper.contactByMeetingSeq(meeting_seq);
+    }
 }

@@ -7,10 +7,27 @@ public class ContactedMeeting {
     private int meeting_seq;
     private int application_seq;
     private Date contact_time;
-
+    private String guest_contact;
+    private String host_contact;
     public ContactedMeeting() {}
 
-    public ContactedMeeting(int contact_seq, int meeting_seq, int application_seq, Date contact_time){
+    public String getGuest_contact() {
+		return guest_contact;
+	}
+
+	public void setGuest_contact(String guest_contact) {
+		this.guest_contact = guest_contact;
+	}
+
+	public String getHost_contact() {
+		return host_contact;
+	}
+
+	public void setHost_contact(String host_contact) {
+		this.host_contact = host_contact;
+	}
+
+	public ContactedMeeting(int contact_seq, int meeting_seq, int application_seq, Date contact_time){
         this.contact_seq = contact_seq;
         this.meeting_seq = meeting_seq;
         this.application_seq = application_seq;
