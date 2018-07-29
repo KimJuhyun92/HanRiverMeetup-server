@@ -32,14 +32,4 @@ public class MeetingGuestController {
         meetingGuestService.cancleJoin(application_seq);
         return ResponseEntity.ok().body(true);
     }
-
-	@GetMapping("/applications/{user_id}")
-	@ResponseBody
-	private ResponseEntity<List<MeetingDetail>> getMyApplications(@PathVariable String user_id) throws DuplicatedMeetingException {
-		List<MeetingDetail> myApplicationList = meetingGuestService.getApplicationsDetailById(user_id);
-		if(myApplicationList != null){
-			return ResponseEntity.ok().body(myApplicationList);
-		}
-		return ResponseEntity.badRequest().body(null);
-	}
 }

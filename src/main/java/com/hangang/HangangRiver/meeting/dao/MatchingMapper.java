@@ -17,6 +17,8 @@ public interface MatchingMapper {
 	ContactedMeeting detail(int contact_seq);
 	ContactedMeeting detailByMatchingInfo(@Param("meeting_seq") int meeting_seq,
 										  @Param("application_seq") int application_seq);
+	ContactedMeeting detailByMeetingSeq(int meeting_seq);
+
 	void delete(int contact_seq);
 	boolean isContactedMeeting(int meeting_seq);
 	//List<MeetingDetail> selectMyMatchingMeetings(String user_id);

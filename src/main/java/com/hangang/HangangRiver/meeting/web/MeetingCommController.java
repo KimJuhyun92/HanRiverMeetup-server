@@ -70,11 +70,4 @@ public class MeetingCommController {
         meetingCommService.unmatch(contact_seq);
         return ResponseEntity.ok().body(true);
     }
-
-    @GetMapping("/matchings/{user_id}")
-    private ResponseEntity<List<MeetingDetail>> getMyMatchings(@PathVariable String user_id) {
-		List<MeetingDetail> myMatchingList = meetingCommService.selectMyMatchings(user_id);
-		return ResponseEntity.ok().body(myMatchingList);
-    }
-
 }
