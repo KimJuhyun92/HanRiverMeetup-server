@@ -11,6 +11,15 @@ public class Comment {
 	private String user_id;
 	private String comment;
 	private Date creation_time;
+	private String nickname;
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
 	public int getComment_seq() {
 		return comment_seq;
