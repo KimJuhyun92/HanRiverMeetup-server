@@ -43,9 +43,9 @@ public class MeetingCommController {
     }
 
     @PostMapping("/match")
-    private ResponseEntity<ContactedMeeting> match(HttpServletRequest request, @RequestBody ContactedMeeting meeting)
+    private ResponseEntity<ContactedMeeting> match(HttpServletRequest request, @RequestBody ContactedMeeting matchingInfo)
             throws AlreadyContactedMeetingException, InvalidMatchingInfoException {
-        ContactedMeeting contactedMeeting = meetingCommService.match(meeting);
+        ContactedMeeting contactedMeeting = meetingCommService.match(matchingInfo);
         return ResponseEntity.ok().body(contactedMeeting);
     }
 

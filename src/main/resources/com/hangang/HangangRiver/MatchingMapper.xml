@@ -5,9 +5,9 @@
 	<insert id="insert" parameterType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
 		INSERT INTO
 			contacted_meeting
-			(meeting_seq, application_seq, contact_time)
+			(meeting_seq, application_seq, host_user_id, guest_user_id, contact_time)
 		VALUES
-			(#{meeting_seq}, #{application_seq}, current_timestamp)
+			(#{meeting_seq}, #{application_seq}, #{host_user_id}, #{guest_user_id}, current_timestamp)
 	</insert>
 
 	<select id="detail" parameterType="com.hangang.HangangRiver.meeting.model.ContactedMeeting"
@@ -57,7 +57,7 @@
 		)
 	</select>
 
-	<select id="selectMyMatchings" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
+	<!-- <select id="selectMyMatchings" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
 			*
 		FROM
@@ -85,6 +85,15 @@
 				AND
 					contacted_meeting.meeting_seq = meeting.meeting_seq)
 		ORDER BY creation_time DESC
+	</select> -->
+
+	<select id="selectMyMatchings" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
+		SELECT
+			*
+		FROM
+			hanriver_meeting.contacted_meeting
+		WHERE
+			host_user_id = #{user_id} OR guest_user_id = #{user_id}
 	</select>
 
 	<select id="contactByMeetingSeq" parameterType="int" resultType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">

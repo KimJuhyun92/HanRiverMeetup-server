@@ -52,6 +52,10 @@ public class MeetingCommService extends MeetingBaseService{
             throw new AlreadyContactedMeetingException();
         }
 
+        MeetingDetail meetingInfo = meetingDetailMapper.detail(meeting.getMeeting_seq());
+        meeting.setHost_user_id(meetingInfo.getUser_id());
+        JoinDetail joinDetailInfo = joinDetailMapper.getJoinDetail(meeting.getApplication_seq());
+        meeting.setGuest_user_id(joinDetailInfo.getUser_id());
         matchingMapper.insert(meeting);
         return meeting;
     }

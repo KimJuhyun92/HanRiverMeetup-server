@@ -1,9 +1,11 @@
 package com.hangang.HangangRiver.meeting.service;
 
-import com.hangang.HangangRiver.meeting.dao.MatchingMapper;
+import com.hangang.HangangRiver.exceptions.InvalidMatchingInfoException;
 import com.hangang.HangangRiver.meeting.model.ContactedMeeting;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
+
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,8 +43,27 @@ public class MyPageService extends MeetingBaseService{
         return hopeMeetingList;
     }
 
-    public List<MeetingDetail> getMyMatchings(String user_id){
-        return matchingMapper.selectMyMatchings(user_id);
+    public List<JSONObject> getMyMatchings(String user_id) throws InvalidMatchingInfoException{
+    	List<ContactedMeeting> contactedMeetingList = matchingMapper.selectMyMatchings(user_id);
+    	List<JSONObject> matchingInfoList = new ArrayList<JSONObject>();
+
+    	if(contactedMeetingList.isEmpty()) {
+    		return matchingInfoList;
+    	}
+
+    	contactedMeetingList.forEach((contactedMeeting)->{
+    		int meeting_seq = contactedMeeting.getMeeting_seq();
+    		int application_seq = contactedMeeting.getApplication_seq();
+
+    		MeetingDetail meetingDetail = meetingDetailMapper.detail(meeting_seq);
+    		JoinDetail joinDetail = joinDetailMapper.getJoinDetail(application_seq);
+
+    		JSONObject matchingInfo = new JSONObject();
+			matchingInfo.put("meeting_detail", meetingDetail);
+			matchingInfo.put("join_detail", joinDetail);
+    		matchingInfoList.add(matchingInfo);
+    	});
+		return matchingInfoList;
     }
 
     public List<MeetingDetail> getMyMeetings(String user_id){

@@ -9,9 +9,27 @@ public class ContactedMeeting {
     private Date contact_time;
     private String guest_contact;
     private String host_contact;
+    private String host_user_id;
+    private String guest_user_id;
     public ContactedMeeting() {}
 
-    public String getGuest_contact() {
+    public String getHost_user_id() {
+		return host_user_id;
+	}
+
+	public void setHost_user_id(String host_user_id) {
+		this.host_user_id = host_user_id;
+	}
+
+	public String getGuest_user_id() {
+		return guest_user_id;
+	}
+
+	public void setGuest_user_id(String guest_user_id) {
+		this.guest_user_id = guest_user_id;
+	}
+
+	public String getGuest_contact() {
 		return guest_contact;
 	}
 

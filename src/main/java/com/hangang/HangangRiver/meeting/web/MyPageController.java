@@ -1,9 +1,12 @@
 package com.hangang.HangangRiver.meeting.web;
 
 import com.hangang.HangangRiver.exceptions.DuplicatedMeetingException;
+import com.hangang.HangangRiver.exceptions.InvalidMatchingInfoException;
 import com.hangang.HangangRiver.meeting.model.ContactedMeeting;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.service.MyPageService;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +26,9 @@ public class MyPageController {
     }
 
     @GetMapping("/{userID}/matchings")
-    private ResponseEntity<List<MeetingDetail>> getMyMatchings(@PathVariable String userID) {
-        List<MeetingDetail> myMatchingList = myPageService.getMyMatchings(userID);
-        return ResponseEntity.ok().body(myMatchingList);
+    private ResponseEntity<List<JSONObject>> getMyMatchings(@PathVariable String userID) throws InvalidMatchingInfoException {
+    	List<JSONObject> myMatchingList = myPageService.getMyMatchings(userID);
+    	return ResponseEntity.ok().body(myMatchingList);
     }
 
     @GetMapping("/{userID}/meetings")
