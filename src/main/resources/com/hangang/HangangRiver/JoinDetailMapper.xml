@@ -27,16 +27,26 @@
 		FROM
 			application
 		WHERE
-			application_seq = #{application_seq}
+			application_seq = 
+		SELECT
+			application.*, user.nickname
+		FROM
+			application, user
+		WHERE
+			application_seq = 7
+		AND
+			application.user_id = user.user_id;
 	</select>
 
 	<select id="getJoinDetails" parameterType="com.hangang.HangangRiver.meeting.model.JoinDetail" resultType="com.hangang.HangangRiver.meeting.model.JoinDetail">
 		SELECT
-			*
+			application.*, user.nickname
 		FROM
-			application
+			application, user
 		WHERE
 			meeting_seq = #{meeting_seq}
+		AND
+			application.user_id = user.user_id
 	</select>
 
 	<select id="getJoinDetailsByUserId" parameterType="String" resultType="com.hangang.HangangRiver.meeting.model.JoinDetail">
