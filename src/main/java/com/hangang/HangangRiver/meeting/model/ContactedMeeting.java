@@ -7,8 +7,6 @@ public class ContactedMeeting {
     private int meeting_seq;
     private int application_seq;
     private Date contact_time;
-    private String guest_contact;
-    private String host_contact;
     private String host_user_id;
     private String guest_user_id;
     public ContactedMeeting() {}
@@ -27,22 +25,6 @@ public class ContactedMeeting {
 
 	public void setGuest_user_id(String guest_user_id) {
 		this.guest_user_id = guest_user_id;
-	}
-
-	public String getGuest_contact() {
-		return guest_contact;
-	}
-
-	public void setGuest_contact(String guest_contact) {
-		this.guest_contact = guest_contact;
-	}
-
-	public String getHost_contact() {
-		return host_contact;
-	}
-
-	public void setHost_contact(String host_contact) {
-		this.host_contact = host_contact;
 	}
 
 	public ContactedMeeting(int contact_seq, int meeting_seq, int application_seq, Date contact_time){
