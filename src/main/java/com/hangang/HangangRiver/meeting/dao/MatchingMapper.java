@@ -21,5 +21,4 @@ public interface MatchingMapper {
 	void delete(int contact_seq);
 	boolean isContactedMeeting(int meeting_seq);
 	List<ContactedMeeting> selectMyMatchings(String user_id);
-	ContactedMeeting contactByMeetingSeq(int meeting_seq);
 }

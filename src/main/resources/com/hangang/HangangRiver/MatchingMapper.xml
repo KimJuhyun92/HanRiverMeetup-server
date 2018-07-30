@@ -96,18 +96,4 @@
 			host_user_id = #{user_id} OR guest_user_id = #{user_id}
 	</select>
 
-	<select id="contactByMeetingSeq" parameterType="int" resultType="com.hangang.HangangRiver.meeting.model.ContactedMeeting">
-		SELECT
-			application.contact AS guest_contact , matchmeeting.contact AS host_contact, matchmeeting.meeting_seq, application.application_seq
-		FROM 
-			(SELECT
-				meeting.contact, meeting.meeting_seq
-			FROM
-				meeting, contacted_meeting
-			WHERE
-				meeting.meeting_seq = contacted_meeting.meeting_seq)AS matchmeeting LEFT JOIN application 
-			ON matchmeeting.meeting_seq = application.meeting_seq
-		WHERE
-			matchmeeting.meeting_seq = #{meeting_seq} 
-	</select>
 </mapper>

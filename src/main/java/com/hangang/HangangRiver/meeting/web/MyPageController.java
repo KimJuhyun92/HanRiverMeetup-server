@@ -41,13 +41,4 @@ public class MyPageController {
         return ResponseEntity.badRequest().body(null);
     }
 
-    @GetMapping("/{meeting_seq}/contacts")
-    @ResponseBody
-    private ResponseEntity <ContactedMeeting> getContactInformation(@PathVariable int meeting_seq) throws DuplicatedMeetingException {
-    	ContactedMeeting contactInformation= myPageService.getContactInformation(meeting_seq);
-        if(contactInformation != null){
-            return ResponseEntity.ok().body(contactInformation);
-        }
-        return ResponseEntity.badRequest().body(null);
-    }
 }

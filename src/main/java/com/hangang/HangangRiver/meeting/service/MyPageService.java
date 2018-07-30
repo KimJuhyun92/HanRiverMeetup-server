@@ -70,7 +70,4 @@ public class MyPageService extends MeetingBaseService{
         return meetingDetailMapper.selectMyMeetings(user_id);
     }
 
-    public ContactedMeeting getContactInformation(int meeting_seq){
-    	return matchingMapper.contactByMeetingSeq(meeting_seq);
-    }
 }
