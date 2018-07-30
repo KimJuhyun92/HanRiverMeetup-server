@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Stop jar') {
       steps {
-        sh 'sudo pkill -f \\\'java -jar\\\' || true;'
+        sh '''git pull origin dev
+sudo pkill -f \'java -jar\' || true;'''
       }
     }
     stage('Build using maven') {
