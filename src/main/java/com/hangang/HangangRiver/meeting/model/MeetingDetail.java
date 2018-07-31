@@ -1,8 +1,12 @@
 package com.hangang.HangangRiver.meeting.model;
 
 
+
+
 import java.util.Date;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -14,11 +18,14 @@ public class MeetingDetail {
 	private String description;
 	private int participants_cnt;
 	private String meeting_location;
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone="Asia/Seoul")
 	private Date meeting_time;
 	private int expected_cost;
 	@ApiModelProperty(hidden=true)
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone="Asia/Seoul")
 	private Date creation_time;
 	@ApiModelProperty(hidden=true)
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone="Asia/Seoul")
 	private Date modification_time;
 	private String title;
 	private String contact;
