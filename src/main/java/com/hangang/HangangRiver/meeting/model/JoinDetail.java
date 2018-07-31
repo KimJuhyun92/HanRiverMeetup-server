@@ -11,6 +11,15 @@ public class JoinDetail {
 	private Date application_time;
 	private String contact;
 	private int contact_seq;
+	private String nickname;
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
 	public int getContact_seq() {
 		return contact_seq;
