@@ -2,12 +2,15 @@ package com.hangang.HangangRiver.meeting.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class JoinDetail {
 	private int application_seq;
 	private int meeting_seq;
 	private String user_id;
 	private String description;
 	private int participants_cnt;
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone="Asia/Seoul")
 	private Date application_time;
 	private String contact;
 	private int contact_seq;
