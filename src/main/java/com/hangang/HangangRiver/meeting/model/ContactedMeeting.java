@@ -2,10 +2,13 @@ package com.hangang.HangangRiver.meeting.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ContactedMeeting {
     private int contact_seq;
     private int meeting_seq;
     private int application_seq;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone="Asia/Seoul")
     private Date contact_time;
     private String host_user_id;
     private String guest_user_id;
