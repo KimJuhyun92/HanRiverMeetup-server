@@ -28,15 +28,15 @@ public class MyPageService extends MeetingBaseService{
             if(contactedMeeting == null) {
                 // 3. 남은 join 리스트들의 meeting seq를 가지고 meeting detail List를 만들어줌
                 MeetingDetail meetingDetail = meetingDetailMapper.detail(request.getMeeting_seq());
-
                 // 4. 이미 다른 사람과 매칭되어 있는지 확인
                 ContactedMeeting otherContactedMeeting = matchingMapper.detailByMeetingSeq(request.getMeeting_seq());
 
                 if(otherContactedMeeting != null) {
                     meetingDetail.setContact_seq(otherContactedMeeting.getContact_seq());
                 }
-
-                hopeMeetingList.add(meetingDetail);
+                if (meetingDetail != null){
+                	hopeMeetingList.add(meetingDetail);
+                }
             }
         });
 
