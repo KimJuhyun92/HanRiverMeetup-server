@@ -12,7 +12,7 @@ public class Comment {
 	private int meeting_seq;
 	private String user_id;
 	private String comment;
-	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone="Asia/Seoul")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="Asia/Seoul")
 	private Date creation_time;
 	private String nickname;
 
