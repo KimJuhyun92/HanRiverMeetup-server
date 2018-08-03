@@ -21,7 +21,7 @@ public class MyPageController {
 
     @GetMapping("/{userID}/join/meetings")
     @ResponseBody
-    private ResponseEntity<List<MeetingDetail>> getHopeMeetings(@PathVariable String userID) {
+    private ResponseEntity<List<JSONObject>> getHopeMeetings(@PathVariable String userID) {
         return ResponseEntity.ok().body(myPageService.getHopeMeetings(userID));
     }
 

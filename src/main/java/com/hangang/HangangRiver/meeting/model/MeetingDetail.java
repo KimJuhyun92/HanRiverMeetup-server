@@ -1,8 +1,5 @@
 package com.hangang.HangangRiver.meeting.model;
 
-
-
-
 import java.util.Date;
 
 

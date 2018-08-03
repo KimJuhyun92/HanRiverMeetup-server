@@ -13,8 +13,8 @@ import java.util.List;
 
 @Service
 public class MyPageService extends MeetingBaseService{
-    public List<MeetingDetail> getHopeMeetings(String userID) {
-        List<MeetingDetail> hopeMeetingList = new ArrayList<>();
+    public List<JSONObject> getHopeMeetings(String userID) {
+        List<JSONObject> hopeMeetingList = new ArrayList<>();
 
         // 1. 먼저 내 아이디에 해당하는 모든 join 리스트를 다 가지고 옴
         List<JoinDetail> joinRequests = joinDetailMapper.getJoinDetailsByUserId(userID);
@@ -34,8 +34,13 @@ public class MyPageService extends MeetingBaseService{
                 if(otherContactedMeeting != null) {
                     meetingDetail.setContact_seq(otherContactedMeeting.getContact_seq());
                 }
+
                 if (meetingDetail != null){
-                	hopeMeetingList.add(meetingDetail);
+                    JSONObject hopeMeetingInfo = new JSONObject();
+                    hopeMeetingInfo.put("meeting_detail", meetingDetail);
+                    hopeMeetingInfo.put("application_seq", request.getApplication_seq());
+
+                    hopeMeetingList.add(hopeMeetingInfo);
                 }
             }
         });
