@@ -55,6 +55,10 @@ public class MeetingHostController {
 		return ResponseEntity.ok().body(meetingHostService.selectTodayMeeting(meetingForm));
 	}
 
+	@GetMapping("/meetings/week/{activity_seq}")
+	private ResponseEntity<List<MeetingDetailForm>> getMeetingsAtWeek(HttpServletRequest request, @PathVariable int activity_seq) throws Exception{
+		return ResponseEntity.ok().body(meetingHostService.selectWeekMeeting(activity_seq));
+	}
 
 	@GetMapping("/requests/{meeting_seq}")
 	private ResponseEntity<List<JoinDetail>> getJoinRequests(@PathVariable int meeting_seq) throws Exception{
