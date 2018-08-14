@@ -55,9 +55,9 @@ public class MeetingHostService extends MeetingBaseService {
         return meetingDetailMapper.selectAll(meetingForm);
     }
 
-    public List<MeetingDetailForm> selectWeekMeeting(int activity_seq){
-    	MeetingDetailForm meetingDetailForm = new MeetingDetailForm();
-    	meetingDetailForm.setActivity_seq(activity_seq);
+    public List<MeetingDetailForm> selectWeeklyMeetings(int activity_seq){
+        MeetingDetailForm meetingDetailForm = new MeetingDetailForm();
+        meetingDetailForm.setActivity_seq(activity_seq);
         return meetingDetailMapper.selectAll(meetingDetailForm);
     }
 
