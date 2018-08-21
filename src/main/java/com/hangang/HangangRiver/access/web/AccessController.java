@@ -52,7 +52,6 @@ public class AccessController {
 		return userInfo;
 	}
 
-
 	public User faceBookUserInfoValidate(String accessToken, String user_id)
 			throws Exception {
 		BufferedReader in = null;
