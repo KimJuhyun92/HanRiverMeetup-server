@@ -1,55 +1,65 @@
 package com.hangang.HangangRiver.weather.model;
 
 public class Weather {
-	private double th1; //현재기온
-	private int sky;	//하늘상태
-	private int pty;	//강수상태
-	private double tmn; //최저기온
-	private double tmx; //최고기온
+	private int weather_seq;
+	private String t1h; //현재기온
+	private String sky;	//하늘상태
+	private String pty;	//강수상태
+	private String tmn; //최저기온
+	private String tmx; //최고기온
 
-	public double getTh1() {
-		return th1;
+	public int getWeather_seq() {
+		return weather_seq;
 	}
 
-	public void setTh1(double th1) {
-		this.th1 = th1;
+	public void setWheather_seq(int wheather_seq) {
+		this.weather_seq = wheather_seq;
 	}
 
-	public int getSky() {
+	public String getT1h() {
+		return t1h;
+	}
+
+	public void setT1h(String t1h) {
+		this.t1h = t1h;
+	}
+
+	public String getSky() {
 		return sky;
 	}
 
-	public void setSky(int sky) {
+	public void setSky(String sky) {
 		this.sky = sky;
 	}
 
-	public int getPty() {
+	public String getPty() {
 		return pty;
 	}
 
-	public void setPty(int pty) {
+	public void setPty(String pty) {
 		this.pty = pty;
 	}
 
-	public double getTmn() {
+	public String getTmn() {
 		return tmn;
 	}
 
-	public void setTmn(double tmn) {
+	public void setTmn(String tmn) {
 		this.tmn = tmn;
 	}
 
-	public double getTmx() {
+	public String getTmx() {
 		return tmx;
 	}
 
-	public void setTmx(double tmx) {
+	public void setTmx(String tmx) {
 		this.tmx = tmx;
 	}
 
 	@Override
 	public String toString() {
-		return "Weather [th1=" + th1 + ", sky=" + sky + ", pty=" + pty + ", tmn=" + tmn + ", tmx=" + tmx + "]";
+		return "Weather [wheather_seq=" + weather_seq + ", t1h=" + t1h + ", sky=" + sky + ", pty=" + pty + ", tmn="
+				+ tmn + ", tmx=" + tmx + "]";
 	}
 
 }
