@@ -76,4 +76,13 @@
 		AND
 			contacted_meeting.application_seq != application.application_seq
 	</select>
+
+	<select id="getJoinDetailCount" parameterType="int" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM 
+			application
+		WHERE
+			meeting_seq = #{meeting_seq}
+	</select>
 </mapper>

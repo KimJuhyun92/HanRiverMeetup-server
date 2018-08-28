@@ -2,6 +2,7 @@ package com.hangang.HangangRiver.meeting.service;
 
 import com.hangang.HangangRiver.exceptions.ExistJoinDetailException;
 import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
+import com.hangang.HangangRiver.exceptions.OverCountJoinDetailException;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Service
 public class MeetingGuestService extends MeetingBaseService{
     public JoinDetail join(JoinDetail joinDetail)
-            throws ExistJoinDetailException, InvalidMeetingException {
+            throws ExistJoinDetailException, InvalidMeetingException, OverCountJoinDetailException {
 
         int meeting_seq = joinDetail.getMeeting_seq();
         String user_id = joinDetail.getUser_id();
@@ -23,6 +24,10 @@ public class MeetingGuestService extends MeetingBaseService{
 
         if (meetingDetailMapper.detail(meeting_seq) == null) {
             throw new InvalidMeetingException();
+        }
+
+        if (joinDetailMapper.getJoinDeatilCount(meeting_seq)>20) {
+            throw new OverCountJoinDetailException();
         }
 
         joinDetailMapper.insert(joinDetail);
