@@ -71,6 +71,13 @@ public class ExceptionController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = OverCountJoinDetailException.class)
+    public String handleBaseException(OverCountJoinDetailException e){
+        logger.error(e.getMessage(), e);
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = Exception.class)
     public String handleBaseException(Exception e){
         logger.error(e.getMessage(), e);

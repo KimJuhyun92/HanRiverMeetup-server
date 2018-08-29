@@ -62,7 +62,9 @@ public class MyPageService extends MeetingBaseService{
 
     		MeetingDetail meetingDetail = meetingDetailMapper.detail(meeting_seq);
     		JoinDetail joinDetail = joinDetailMapper.getJoinDetail(application_seq);
-
+    		if( meetingDetail == null || joinDetail == null){
+    			return;
+    		}
     		JSONObject matchingInfo = new JSONObject();
 			matchingInfo.put("meeting_detail", meetingDetail);
 			matchingInfo.put("join_detail", joinDetail);
