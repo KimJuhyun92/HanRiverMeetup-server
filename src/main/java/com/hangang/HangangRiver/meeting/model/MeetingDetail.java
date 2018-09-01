@@ -13,11 +13,11 @@ public class MeetingDetail {
 	private int activity_seq;
 	private String user_id;
 	private String description;
-	private int participants_cnt;
+	private Integer participants_cnt;
 	private String meeting_location;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="Asia/Seoul")
 	private Date meeting_time;
-	private int expected_cost;
+	private Integer expected_cost;
 	@ApiModelProperty(hidden=true)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="Asia/Seoul")
 	private Date creation_time;
@@ -109,14 +109,6 @@ public class MeetingDetail {
 		this.description = description;
 	}
 
-	public int getParticipants_cnt() {
-		return participants_cnt;
-	}
-
-	public void setParticipants_cnt(int participants_cnt) {
-		this.participants_cnt = participants_cnt;
-	}
-
 	public String getMeeting_location() {
 		return meeting_location;
 	}
@@ -125,11 +117,19 @@ public class MeetingDetail {
 		this.meeting_location = meeting_location;
 	}
 
-	public int getExpected_cost() {
+	public Integer getParticipants_cnt() {
+		return participants_cnt;
+	}
+
+	public void setParticipants_cnt(Integer participants_cnt) {
+		this.participants_cnt = participants_cnt;
+	}
+
+	public Integer getExpected_cost() {
 		return expected_cost;
 	}
 
-	public void setExpected_cost(int expected_cost) {
+	public void setExpected_cost(Integer expected_cost) {
 		this.expected_cost = expected_cost;
 	}
 

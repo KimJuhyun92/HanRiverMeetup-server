@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.hangang.HangangRiver.exceptions.DuplicatedMeetingException;
+import com.hangang.HangangRiver.exceptions.InvalidMeetingDetailException;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetailForm;
@@ -21,9 +22,14 @@ public class MeetingHostController {
 
 	@PostMapping("/meeting")
 	@ResponseBody
-	private ResponseEntity<MeetingDetail> createMeeting(HttpServletRequest request, @RequestBody MeetingDetail meetingDetail) throws Exception {
-		MeetingDetail createdMeetingDetail = meetingHostService.createMeeting(meetingDetail);
-		return ResponseEntity.ok().body(createdMeetingDetail);
+	private ResponseEntity<MeetingDetail> createMeeting(HttpServletRequest request, @RequestBody MeetingDetail meetingDetail) throws InvalidMeetingDetailException, DuplicatedMeetingException{
+		String exceptions = checkErrorMeetingDetail(meetingDetail);
+		if (!exceptions.isEmpty()){
+			throw new InvalidMeetingDetailException(exceptions);
+		} else{
+			MeetingDetail createdMeetingDetail = meetingHostService.createMeeting(meetingDetail);
+			return ResponseEntity.ok().body(createdMeetingDetail);
+		}
 	}
 
 	@GetMapping("/meeting/{meeting_seq}")
@@ -39,9 +45,40 @@ public class MeetingHostController {
 	}
 
 	@PutMapping("/meeting/{meeting_seq}")
-	private ResponseEntity<MeetingDetail> modifyMeeting(@PathVariable int meeting_seq, @RequestBody MeetingDetail meetingDetail){
-		MeetingDetail modifiedMeetingDetail = meetingHostService.modifyMeeting(meeting_seq, meetingDetail);
-		return ResponseEntity.ok().body(modifiedMeetingDetail);
+	private ResponseEntity<MeetingDetail> modifyMeeting(@PathVariable int meeting_seq, @RequestBody MeetingDetail meetingDetail)throws InvalidMeetingDetailException{
+		String exceptions = checkErrorMeetingDetail(meetingDetail);
+		if (!exceptions.isEmpty()){
+			throw new InvalidMeetingDetailException(exceptions);
+		} else{
+			MeetingDetail modifiedMeetingDetail = meetingHostService.modifyMeeting(meeting_seq, meetingDetail);
+			return ResponseEntity.ok().body(modifiedMeetingDetail);
+		}
+	}
+
+	public String checkErrorMeetingDetail (MeetingDetail meetingDetail) {
+		String errors = null;
+		if (meetingDetail.getTitle() == null){
+			errors = "모임의 제목을 입력해주세요.\n";
+		}
+		if (meetingDetail.getMeeting_location() == null){
+			errors += "모임 위치를 선택해주세요.\n";
+		}
+		if (meetingDetail.getMeeting_time() == null){
+			errors += "모임 시간을 선택해주세요.\n";
+		}
+		if (meetingDetail.getParticipants_cnt() == null){
+			errors += "모임 인원을 선택해주세요.\n";
+		}
+		if (meetingDetail.getExpected_cost() == null){
+			errors += "모임 회비를 입력해주세요.\n";
+		}
+		if (meetingDetail.getContact() == null){
+			errors += "모임 연락처를 입력해주세요.\n";
+		}
+		if (meetingDetail.getDescription() == null){
+			errors += "모임 설명을 입력해주세요.\n";
+		}
+		return errors;
 	}
 
 	@DeleteMapping("/meeting/{meeting_seq}")
