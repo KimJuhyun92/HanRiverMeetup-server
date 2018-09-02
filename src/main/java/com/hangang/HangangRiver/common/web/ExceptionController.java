@@ -78,6 +78,13 @@ public class ExceptionController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = InvalidMeetingDetailException.class)
+    public String handleBaseException(InvalidMeetingDetailException e){
+        logger.error(e.getMessage(), e);
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = Exception.class)
     public String handleBaseException(Exception e){
         logger.error(e.getMessage(), e);
