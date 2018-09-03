@@ -1,8 +1,6 @@
 package com.hangang.HangangRiver.meeting.web;
 
-import com.hangang.HangangRiver.exceptions.DuplicatedMeetingException;
 import com.hangang.HangangRiver.exceptions.InvalidMatchingInfoException;
-import com.hangang.HangangRiver.meeting.model.ContactedMeeting;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 import com.hangang.HangangRiver.meeting.service.MyPageService;
 
@@ -33,7 +31,7 @@ public class MyPageController {
 
     @GetMapping("/{userID}/meetings")
     @ResponseBody
-    private ResponseEntity<List<MeetingDetail>> getMyMeetings(@PathVariable String userID) throws DuplicatedMeetingException {
+    private ResponseEntity<List<MeetingDetail>> getMyMeetings(@PathVariable String userID) {
         List<MeetingDetail> myMeetingList = myPageService.getMyMeetings(userID);
         if(myMeetingList != null){
             return ResponseEntity.ok().body(myMeetingList);

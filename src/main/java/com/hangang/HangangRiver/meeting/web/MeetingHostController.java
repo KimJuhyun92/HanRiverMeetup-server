@@ -24,7 +24,7 @@ public class MeetingHostController {
 	@ResponseBody
 	private ResponseEntity<MeetingDetail> createMeeting(HttpServletRequest request, @RequestBody MeetingDetail meetingDetail) throws InvalidMeetingDetailException, DuplicatedMeetingException{
 		String exceptions = checkErrorMeetingDetail(meetingDetail);
-		if (!exceptions.isEmpty()){
+		if (exceptions !=null){
 			throw new InvalidMeetingDetailException(exceptions);
 		} else{
 			MeetingDetail createdMeetingDetail = meetingHostService.createMeeting(meetingDetail);
@@ -34,7 +34,7 @@ public class MeetingHostController {
 
 	@GetMapping("/meeting/{meeting_seq}")
 	@ResponseBody
-	private ResponseEntity<MeetingDetail> getMeetingDetail(@PathVariable int meeting_seq) throws DuplicatedMeetingException {
+	private ResponseEntity<MeetingDetail> getMeetingDetail(@PathVariable int meeting_seq){
 		MeetingDetail meetingDetail = meetingHostService.getMeetingDetailById(meeting_seq);
 
 		if(meetingDetail != null){
@@ -47,7 +47,7 @@ public class MeetingHostController {
 	@PutMapping("/meeting/{meeting_seq}")
 	private ResponseEntity<MeetingDetail> modifyMeeting(@PathVariable int meeting_seq, @RequestBody MeetingDetail meetingDetail)throws InvalidMeetingDetailException{
 		String exceptions = checkErrorMeetingDetail(meetingDetail);
-		if (!exceptions.isEmpty()){
+		if (exceptions !=null){
 			throw new InvalidMeetingDetailException(exceptions);
 		} else{
 			MeetingDetail modifiedMeetingDetail = meetingHostService.modifyMeeting(meeting_seq, meetingDetail);
