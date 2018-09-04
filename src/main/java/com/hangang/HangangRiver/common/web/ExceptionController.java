@@ -85,6 +85,13 @@ public class ExceptionController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = InvalidEventException.class)
+    public String handleBaseException(InvalidEventException e){
+        logger.error(e.getMessage(), e);
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = Exception.class)
     public String handleBaseException(Exception e){
         logger.error(e.getMessage(), e);
