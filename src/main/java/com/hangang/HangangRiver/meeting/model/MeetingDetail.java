@@ -168,4 +168,29 @@ public class MeetingDetail {
 				+ ", contact=" + contact + "]";
 	}
 
+	public String checkErrorMeetingDetail (MeetingDetail meetingDetail) {
+		String errors = null;
+		if (meetingDetail.getTitle() == null){
+			errors = "모임의 제목을 입력해주세요.\n";
+		}
+		if (meetingDetail.getMeeting_location() == null){
+			errors += "모임 위치를 선택해주세요.\n";
+		}
+		if (meetingDetail.getMeeting_time() == null){
+			errors += "모임 시간을 선택해주세요.\n";
+		}
+		if (meetingDetail.getParticipants_cnt() == null){
+			errors += "모임 인원을 선택해주세요.\n";
+		}
+		if (meetingDetail.getExpected_cost() == null){
+			errors += "모임 회비를 입력해주세요.\n";
+		}
+		if (meetingDetail.getContact() == null){
+			errors += "모임 연락처를 입력해주세요.\n";
+		}
+		if (meetingDetail.getDescription() == null){
+			errors += "모임 설명을 입력해주세요.\n";
+		}
+		return errors;
+	}
 }
