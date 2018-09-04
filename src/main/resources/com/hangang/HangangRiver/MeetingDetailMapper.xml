@@ -5,9 +5,21 @@
 	<insert id="insert" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		INSERT INTO
 			meeting
-			(activity_seq, user_id, description, participants_cnt, meeting_location, meeting_time, expected_cost, creation_time, modification_time, title, contact)
+			(activity_seq, user_id, description, participants_cnt, meeting_location, meeting_time, expected_cost, creation_time, modification_time, title, contact
+			<if test="lat != null and lat != ''">
+				,lat
+			</if>
+			<if test="lng != null and lng != ''">
+				,lng
+			</if>)
 		VALUES
-			(#{activity_seq}, #{user_id}, #{description}, #{participants_cnt}, #{meeting_location}, #{meeting_time}, #{expected_cost}, current_timestamp, current_timestamp, #{title},#{contact})
+			(#{activity_seq}, #{user_id}, #{description}, #{participants_cnt}, #{meeting_location}, #{meeting_time}, #{expected_cost}, current_timestamp, current_timestamp, #{title},#{contact}
+			<if test="lat != null and lat != ''">
+				,#{lat}
+			</if>
+			<if test="lng != null and lng != ''">
+				,#{lng}
+			</if>)
 		<selectKey keyProperty="meeting_seq" resultType="Integer">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -28,23 +40,32 @@
 		UPDATE
 			meeting
 		<set>
+			<if test="meetingDetail.title != null and meetingDetail.title != ''">
+				title = #{meetingDetail.title}
+			</if>
 			<if test="meetingDetail.description != null and meetingDetail.description != ''">
-				description = #{meetingDetail.description},
+				,description = #{meetingDetail.description}
 			</if>
 			<if test="meetingDetail.participants_cnt != null">
-				participants_cnt = #{meetingDetail.participants_cnt},
+				,participants_cnt = #{meetingDetail.participants_cnt}
 			</if>
 			<if test="meetingDetail.meeting_location != null and meetingDetail.meeting_location != ''">
-				meeting_location = #{meetingDetail.meeting_location},
+				,meeting_location = #{meetingDetail.meeting_location}
 			</if>
 			<if test="meetingDetail.meeting_time != null">
-				meeting_time = #{meetingDetail.meeting_time},
+				,meeting_time = #{meetingDetail.meeting_time}
 			</if>
 			<if test="meetingDetail.expected_cost != null">
-				expected_cost = #{meetingDetail.expected_cost},
+				,expected_cost = #{meetingDetail.expected_cost}
 			</if>
 			<if test="meetingDetail.contact != null and meetingDetail.contact != ''">
-				contact = #{meetingDetail.contact}
+				,contact = #{meetingDetail.contact}
+			</if>
+			<if test="meetingDetail.lat != null and meetingDetail.lat != ''">
+				,lat = #{meetingDetail.lat}
+			</if>
+			<if test="meetingDetail.lng != null and meetingDetail.lng != ''">
+				,lng = #{meetingDetail.lng}
 			</if>
 		</set>
 		WHERE
@@ -69,10 +90,10 @@
 
 	<select id="selectAll" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
-			mmseq as meeting_seq, creation_time, activity_seq, user_id, meeting_time, participants_cnt, expected_cost, title, meeting_location
+			mmseq as meeting_seq, creation_time, activity_seq, user_id, meeting_time, participants_cnt, expected_cost, title, meeting_location, lat, lng
 		FROM
 			(SELECT
-				m.meeting_seq AS mmseq, c.meeting_seq AS cmseq, m.creation_time, m.activity_seq, m.user_id, m.meeting_time, m.participants_cnt, m.expected_cost, m.title, m.meeting_location
+				m.meeting_seq AS mmseq, c.meeting_seq AS cmseq, m.creation_time, m.activity_seq, m.user_id, m.meeting_time, m.participants_cnt, m.expected_cost, m.title, m.meeting_location, m.lat, m.lng
 			FROM
 				meeting m LEFT JOIN contacted_meeting c ON m.meeting_seq = c.meeting_seq) matching
 			WHERE

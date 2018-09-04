@@ -23,8 +23,8 @@ public class MeetingHostController {
 	@PostMapping("/meeting")
 	@ResponseBody
 	private ResponseEntity<MeetingDetail> createMeeting(HttpServletRequest request, @RequestBody MeetingDetail meetingDetail) throws InvalidMeetingDetailException, DuplicatedMeetingException{
-		String exceptions = checkErrorMeetingDetail(meetingDetail);
-		if (!exceptions.isEmpty()){
+		String exceptions = meetingDetail.checkErrorMeetingDetail(meetingDetail);
+		if (exceptions !=null){
 			throw new InvalidMeetingDetailException(exceptions);
 		} else{
 			MeetingDetail createdMeetingDetail = meetingHostService.createMeeting(meetingDetail);
@@ -34,7 +34,7 @@ public class MeetingHostController {
 
 	@GetMapping("/meeting/{meeting_seq}")
 	@ResponseBody
-	private ResponseEntity<MeetingDetail> getMeetingDetail(@PathVariable int meeting_seq) throws DuplicatedMeetingException {
+	private ResponseEntity<MeetingDetail> getMeetingDetail(@PathVariable int meeting_seq){
 		MeetingDetail meetingDetail = meetingHostService.getMeetingDetailById(meeting_seq);
 
 		if(meetingDetail != null){
@@ -46,39 +46,13 @@ public class MeetingHostController {
 
 	@PutMapping("/meeting/{meeting_seq}")
 	private ResponseEntity<MeetingDetail> modifyMeeting(@PathVariable int meeting_seq, @RequestBody MeetingDetail meetingDetail)throws InvalidMeetingDetailException{
-		String exceptions = checkErrorMeetingDetail(meetingDetail);
-		if (!exceptions.isEmpty()){
+		String exceptions = meetingDetail.checkErrorMeetingDetail(meetingDetail);
+		if (exceptions !=null){
 			throw new InvalidMeetingDetailException(exceptions);
 		} else{
 			MeetingDetail modifiedMeetingDetail = meetingHostService.modifyMeeting(meeting_seq, meetingDetail);
 			return ResponseEntity.ok().body(modifiedMeetingDetail);
 		}
-	}
-
-	public String checkErrorMeetingDetail (MeetingDetail meetingDetail) {
-		String errors = null;
-		if (meetingDetail.getTitle() == null){
-			errors = "모임의 제목을 입력해주세요.\n";
-		}
-		if (meetingDetail.getMeeting_location() == null){
-			errors += "모임 위치를 선택해주세요.\n";
-		}
-		if (meetingDetail.getMeeting_time() == null){
-			errors += "모임 시간을 선택해주세요.\n";
-		}
-		if (meetingDetail.getParticipants_cnt() == null){
-			errors += "모임 인원을 선택해주세요.\n";
-		}
-		if (meetingDetail.getExpected_cost() == null){
-			errors += "모임 회비를 입력해주세요.\n";
-		}
-		if (meetingDetail.getContact() == null){
-			errors += "모임 연락처를 입력해주세요.\n";
-		}
-		if (meetingDetail.getDescription() == null){
-			errors += "모임 설명을 입력해주세요.\n";
-		}
-		return errors;
 	}
 
 	@DeleteMapping("/meeting/{meeting_seq}")
