@@ -42,11 +42,11 @@ public class EventController {
         return ResponseEntity.ok().body(true);
     }
 
-	@PutMapping("/event/{event_seq}")
-	private ResponseEntity<Object> modifyEvent(@PathVariable int event_seq, @RequestBody Event event)throws InvalidEventException{
-		eventService.modifyEvent(event_seq, event);
-		return ResponseEntity.ok().body(true);
-	}
+    @PutMapping("/event/{event_seq}")
+    private ResponseEntity<Object> modifyEvent(@PathVariable int event_seq, @RequestBody Event event)throws InvalidEventException{
+    	eventService.modifyEvent(event_seq, event);
+        return ResponseEntity.ok().body(true);
+    }
 
     @GetMapping("/events")
     private ResponseEntity<List<Event>> getEvents(HttpServletRequest request)throws Exception{
