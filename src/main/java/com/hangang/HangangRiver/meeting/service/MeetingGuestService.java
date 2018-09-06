@@ -26,7 +26,7 @@ public class MeetingGuestService extends MeetingBaseService{
             throw new InvalidMeetingException();
         }
 
-        if (joinDetailMapper.getJoinDeatilCount(meeting_seq)>20) {
+        if (joinDetailMapper.getJoinDetailCount(meeting_seq)>20) {
             throw new OverCountJoinDetailException();
         }
 

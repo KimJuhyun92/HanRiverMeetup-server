@@ -1,0 +1,52 @@
+package com.hangang.HangangRiver.timeline.model;
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class Event {
+	private int event_seq;
+	private String imageurl;
+	private boolean isongoing;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="Asia/Seoul")
+	private Date creation_time;
+
+	public int getEvent_seq() {
+		return event_seq;
+	}
+
+	public void setEvent_seq(int event_seq) {
+		this.event_seq = event_seq;
+	}
+
+	public String getImageurl() {
+		return imageurl;
+	}
+
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
+
+	public boolean isIsongoing() {
+		return isongoing;
+	}
+
+	public void setIsongoing(boolean isongoing) {
+		this.isongoing = isongoing;
+	}
+
+	public Date getCreation_time() {
+		return creation_time;
+	}
+
+	public void setCreation_time(Date creation_time) {
+		this.creation_time = creation_time;
+	}
+
+	@Override
+	public String toString() {
+		return "Event [event_seq=" + event_seq + ", imageurl=" + imageurl + ", isongoing=" + isongoing
+				+ ", creation_time=" + creation_time + "]";
+	}
+
+}
