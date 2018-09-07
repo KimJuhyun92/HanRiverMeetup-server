@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangang.HangangRiver.map.dao.MapMarkerMapper">
+
+	<insert id="insert" parameterType="com.hangang.HangangRiver.map.model.MapMarker">
+		INSERT INTO
+			map_marker
+			(lat, lng, map_category_seq)
+		VALUES
+			(#{lat}, #{lng}, #{map_category_seq})
+		<selectKey keyProperty="map_seq" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<select id="selectMapMarkerList" parameterType="com.hangang.HangangRiver.map.model.MapMarker" resultType="com.hangang.HangangRiver.map.model.MapMarker">
+		SELECT
+			*
+		FROM 
+			map_marker
+		WHERE
+			map_category_seq = #{map_category_seq}
+	</select>
+</mapper>
