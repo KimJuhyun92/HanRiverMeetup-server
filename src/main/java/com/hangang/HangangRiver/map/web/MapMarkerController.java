@@ -31,6 +31,6 @@ public class MapMarkerController {
 
     @GetMapping("/mapMarkers/{map_category_seq}")
     private ResponseEntity<List<MapMarker>> getMapMarkers(HttpServletRequest request, @PathVariable int map_category_seq)throws Exception{
-        return ResponseEntity.ok().body(mapMarkerService.getMapMarkerByCategory(map_category_seq));
+        return ResponseEntity.ok().body(mapMarkerService.getMapMarkersByCategory(map_category_seq));
     }
 }

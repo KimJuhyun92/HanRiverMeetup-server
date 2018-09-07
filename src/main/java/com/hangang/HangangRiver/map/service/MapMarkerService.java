@@ -19,7 +19,7 @@ public class MapMarkerService {
     	return mapMarker;
     }
 
-    public List<MapMarker> getMapMarkerByCategory(int map_category_seq){
+    public List<MapMarker> getMapMarkersByCategory(int map_category_seq){
     	return mapMarkerMapper.selectMapMarkerList(map_category_seq);
     }
 }
