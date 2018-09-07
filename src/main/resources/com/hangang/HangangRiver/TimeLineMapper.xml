@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangang.HangangRiver.timeline.dao.TimeLineMapper">
+
+	<insert id="insert" parameterType="com.hangang.HangangRiver.timeline.model.TimeLine">
+		INSERT INTO
+			timeline
+			(user_id, location, imageurl, content, creation_time)
+		VALUES
+			(#{user_id}, #{location}, #{imageurl}, #{content}, current_timestamp)
+		<selectKey keyProperty="timeline_seq" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<delete id="delete" parameterType="com.hangang.HangangRiver.timeline.model.TimeLine">
+		DELETE
+		FROM
+			timeline
+		WHERE
+			timeline_seq = #{timeline_seq}
+	</delete>
+
+	<select id="selectTimeLineList" parameterType="com.hangang.HangangRiver.timeline.model.TimeLineForm" resultType="com.hangang.HangangRiver.timeline.model.TimeLineForm">
+		SELECT
+			*
+		FROM 
+			timeline
+		WHERE
+			1 = 1
+			<if test="startTime != null and startTime!= ''">
+				AND
+					creation_time BETWEEN #{startTime} AND #{endTime}
+			</if>
+	</select>
+</mapper>
