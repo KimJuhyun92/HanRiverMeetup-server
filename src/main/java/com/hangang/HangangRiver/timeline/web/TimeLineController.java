@@ -39,6 +39,6 @@ public class TimeLineController {
 
     @GetMapping("/timeLines")
     private ResponseEntity<List<TimeLineForm>> gettimeLines(HttpServletRequest request, TimeLineForm timeLineForm)throws Exception{
-        return ResponseEntity.ok().body(timeLineService.selectTimeLine(timeLineForm));
+        return ResponseEntity.ok().body(timeLineService.selectTodayTimeLine(timeLineForm));
     }
 }
