@@ -27,7 +27,7 @@ public class TimeLineService {
     	timeLineMapper.delete(timeLine_seq);
     }
 
-    public List<TimeLineForm> selectTimeLine(TimeLineForm timeLineForm){
+    public List<TimeLineForm> selectTodayTimeLine(TimeLineForm timeLineForm){
         SimpleDateFormat SimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
         Date currentTime = new Date ();
         String time = SimpleDateFormat.format ( currentTime );
