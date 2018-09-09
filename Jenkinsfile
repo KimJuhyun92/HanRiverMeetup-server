@@ -16,8 +16,12 @@ mvn clean package;'''
     }
     stage('Run application') {
       steps {
-        sh '''sudo nohup java -jar ./target/HangangRiver-0.0.1-SNAPSHOT.jar &;
-sudo git clean -fdx;'''
+        sh 'sudo nohup java -jar ./target/HangangRiver-0.0.1-SNAPSHOT.jar &'
+      }
+    }
+    stage('Clear') {
+      steps {
+        sh 'sudo git clean -fdx'
       }
     }
   }
