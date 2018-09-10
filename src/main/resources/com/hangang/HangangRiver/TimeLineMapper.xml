@@ -33,4 +33,15 @@
 					creation_time BETWEEN #{startTime} AND #{endTime}
 			</if>
 	</select>
+
+	<select id="selectTimeLineListWithOffset" resultType="com.hangang.HangangRiver.timeline.model.TimeLineForm">
+		SELECT
+			*
+		FROM
+			timeline
+		WHERE
+			DATE(#{creation_time}) = DATE(creation_time)
+		ORDER BY
+			creation_time DESC LIMIT #{limit} OFFSET #{offset}
+	</select>
 </mapper>

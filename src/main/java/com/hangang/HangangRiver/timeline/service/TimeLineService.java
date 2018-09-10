@@ -36,4 +36,11 @@ public class TimeLineService {
         timeLineForm.setEndTime(time+" 23:59:59");
     	return timeLineMapper.selectTimeLineList(timeLineForm);
     }
+
+    public List<TimeLineForm> selectPosts(Date date, Integer offset, Integer limit) {
+        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+        String dateStr = SimpleDateFormat.format ( date );
+
+        return timeLineMapper.selectTimeLineListWithOffset(dateStr, offset, limit);
+    }
 }
