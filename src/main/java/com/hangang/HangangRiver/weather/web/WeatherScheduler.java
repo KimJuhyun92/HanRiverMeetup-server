@@ -9,6 +9,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -28,23 +30,40 @@ public class WeatherScheduler {
 	private String ny = "126";
 	private String serviceKey = "wHkULcMomTpz3wVCYqSbrap5VrtdRQrZSTLd%2BcX4pwaZTjaVpDj9cF5fydh7%2BapE1tAwOBFUMJPrsTOBWTJUfA%3D%3D";
 
+	private static final Logger logger = LogManager.getLogger(WeatherScheduler.class);
+
 	@Autowired
 	WeatherService weatherService;
+
+
+	//@Scheduled(cron="*/40 * * * * *")40초마다
 
 	@Scheduled(cron="0 45 * * * *")//매시간 45분
 	public void setWeatherInformation() throws IOException, ParseException{
 		Weather weatherInformation = new Weather();
 		weatherInformation = getNowWeather();
-		if (Double.parseDouble(weatherInformation.getT1h()) < Double.parseDouble(todayTmn)) {//최저온도가 현재온도보다 높을경우
-			weatherInformation.setTmn(weatherInformation.getT1h());
-			weatherInformation.setTmx(todayTmx);
-		} else if (Double.parseDouble(weatherInformation.getT1h()) > Double.parseDouble(todayTmx)) {//최고온도가 현재온도보다 낮을경우
-			weatherInformation.setTmn(todayTmn);
-			weatherInformation.setTmx(weatherInformation.getT1h());
+
+		String lastTmn = weatherService.selectWeather().getTmn();
+		String lastTmx = weatherService.selectWeather().getTmx();
+
+		if (Double.parseDouble(weatherInformation.getT1h()) < Double.parseDouble(todayTmn) || Double.parseDouble(todayTmn)<=0) {//최저온도가 현재온도보다 높을경우
+			//weatherInformation.setTmn(weatherInformation.getT1h());
+			//weatherInformation.setTmx(todayTmx);
+			weatherInformation.setTmn(lastTmn);
+			weatherInformation.setTmx(lastTmx);
+		} else if (Double.parseDouble(weatherInformation.getT1h()) > Double.parseDouble(todayTmx) || Double.parseDouble(todayTmx)<=0) {//최고온도가 현재온도보다 낮을경우
+			//weatherInformation.setTmn(todayTmn);
+			//weatherInformation.setTmx(weatherInformation.getT1h());
+			weatherInformation.setTmn(lastTmn);
+			weatherInformation.setTmx(lastTmx);
 		} else {
 			weatherInformation.setTmn(todayTmn);
 			weatherInformation.setTmx(todayTmx);
 		}
+
+		logger.error("[insertDBWeather::::"+weatherInformation+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
+		System.out.println("[insertDBWeather::::"+weatherInformation+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
+
 		weatherService.createWeatherInformation(weatherInformation);
 	}
 
@@ -100,6 +119,10 @@ public class WeatherScheduler {
 						+ "serviceKey=" + serviceKey + "&base_date=" + baseDate + "&base_time=" + baseTime
 						+ "&nx="+ nx + "&ny=" + ny + "&_type=json";
 
+		logger.error("[callWeatherAPIParams::::"+service+"::"+serviceValue+":"+baseTime+"]");
+		System.out.println("[callWeatherAPIParams::::"+service+"::"+serviceValue+":"+baseTime+"]");
+		System.out.println(urlStr);
+
 		URL url = new URL(urlStr);
 		BufferedReader bf;
 		String line = "";
@@ -143,8 +166,8 @@ public class WeatherScheduler {
 				}
 			}
 		}
-		System.out.println(nowWeather);
-		System.out.println(todayTmn+":"+todayTmx);
+		System.out.println("[callWeatherAPI::::"+nowWeather+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
+		logger.error("[callWeatherAPI::::"+nowWeather+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
 		return nowWeather;
 	}
 
