@@ -1,9 +1,13 @@
 package com.hangang.HangangRiver.timeline.web;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.hangang.HangangRiver.exceptions.InvalidJsonBody;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,20 +29,39 @@ public class TimeLineController {
     @Autowired
     TimeLineService timeLineService;
 
-    @PostMapping("/timeLine")
-    private ResponseEntity<TimeLine> createTimeLine(HttpServletRequest request, @RequestBody TimeLine timeLine){
+    @PostMapping("/post")
+    private ResponseEntity<TimeLine> createPost(HttpServletRequest request, @RequestBody TimeLine timeLine){
     	TimeLine createdTimeLine = timeLineService.createTimeLine(timeLine);
         return ResponseEntity.ok().body(createdTimeLine);
     }
 
-    @DeleteMapping("/timeLine/{timeLine_seq}")
-    private ResponseEntity<Object> removeTimeLine(@PathVariable int timeLine_seq) throws Exception{
+    @DeleteMapping("/post/{timeLine_seq}")
+    private ResponseEntity<Object> removePost(@PathVariable int timeLine_seq) throws Exception{
     	timeLineService.removeTimeLine(timeLine_seq);
         return ResponseEntity.ok().body(true);
     }
 
-    @GetMapping("/timeLines")
-    private ResponseEntity<List<TimeLineForm>> gettimeLines(HttpServletRequest request, TimeLineForm timeLineForm)throws Exception{
+    @GetMapping("/posts")
+    private ResponseEntity<List<TimeLineForm>> getPosts(HttpServletRequest request, TimeLineForm timeLineForm)
+            throws Exception{
         return ResponseEntity.ok().body(timeLineService.selectTodayTimeLine(timeLineForm));
+    }
+
+    @PostMapping("/posts")
+    private ResponseEntity<List<TimeLineForm>> getPosts(HttpServletRequest request, @RequestBody Map<String, Object> jsonString)
+            throws InvalidJsonBody, ParseException {
+
+        JSONObject jsonObj = new JSONObject(jsonString);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse((String)jsonObj.get("date"));
+        Integer offset = (Integer)jsonObj.get("offset");
+        Integer limit = (Integer)jsonObj.get("limit");
+
+        if(date == null || offset == null || limit == null) {
+            throw new InvalidJsonBody();
+        }
+
+        return ResponseEntity.ok().body(timeLineService.selectPosts(date, offset, limit));
     }
 }
