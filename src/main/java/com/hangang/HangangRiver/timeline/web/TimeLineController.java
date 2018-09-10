@@ -30,13 +30,13 @@ public class TimeLineController {
     TimeLineService timeLineService;
 
     @PostMapping("/post")
-    private ResponseEntity<TimeLine> createTimeLine(HttpServletRequest request, @RequestBody TimeLine timeLine){
+    private ResponseEntity<TimeLine> createPost(HttpServletRequest request, @RequestBody TimeLine timeLine){
     	TimeLine createdTimeLine = timeLineService.createTimeLine(timeLine);
         return ResponseEntity.ok().body(createdTimeLine);
     }
 
     @DeleteMapping("/post/{timeLine_seq}")
-    private ResponseEntity<Object> removeTimeLine(@PathVariable int timeLine_seq) throws Exception{
+    private ResponseEntity<Object> removePost(@PathVariable int timeLine_seq) throws Exception{
     	timeLineService.removeTimeLine(timeLine_seq);
         return ResponseEntity.ok().body(true);
     }
