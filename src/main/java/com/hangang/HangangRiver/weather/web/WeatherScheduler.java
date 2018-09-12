@@ -63,8 +63,9 @@ public class WeatherScheduler {
 
 		logger.error("[insertDBWeather::::"+weatherInformation+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
 		System.out.println("[insertDBWeather::::"+weatherInformation+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
-
-		weatherService.createWeatherInformation(weatherInformation);
+		if (Double.parseDouble(weatherInformation.getTmn())!=0 || Double.parseDouble(weatherInformation.getTmx())!=0){
+			weatherService.createWeatherInformation(weatherInformation);
+		}
 	}
 
 	public Weather getNowWeather() throws IOException, ParseException{
