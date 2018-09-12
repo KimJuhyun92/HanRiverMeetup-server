@@ -33,7 +33,7 @@ public class AccessController {
 	@PostMapping("/loginValidate")
 	private ResponseEntity<User> loginValidate(HttpServletRequest request, @RequestBody User user)
 			throws Exception {
-		return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id()));
+		return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id(), user));
 	}
 
 	@PostMapping("/registUser")
@@ -42,12 +42,12 @@ public class AccessController {
 		return ResponseEntity.ok().body(accessService.registUser(user.getUser_id(), user));
 	}
 
-	private User submitFacebookLogin(String accessToken, String user_id)
+	private User submitFacebookLogin(String accessToken, String user_id, User paramUser)
 			throws Exception {
 		User faceUser =faceBookUserInfoValidate(accessToken, user_id);//페북에 한번더 검증 요청
 		User userInfo = null;
 		if (faceUser != null){//검증된 경우
-			userInfo = saveUserInfo(faceUser);
+			userInfo = saveUserInfo(faceUser, paramUser);
 		}
 		return userInfo;
 	}
@@ -82,7 +82,7 @@ public class AccessController {
 		}
 	}
 
-	public User saveUserInfo(User user){
+	public User saveUserInfo(User user, User paramUser){
 		Boolean existUser = selectExistUser(user);//최초로그인인지 확인
 		user.setUser_id(user.getUser_id());
 		String hangang_token = hashMD5(user.getAccess_token()+user.getUser_id());
@@ -90,6 +90,7 @@ public class AccessController {
 		if (existUser){
 			accessService.modifyUser(user.getUser_id(), user);//아니면 한강토큰 업뎃
 		}else {
+			user.setFcm_token(paramUser.getFcm_token());
 			accessService.createUser(user);//최초로그인이면 insert
 		}
 		return accessService.getUserDetailById(user.getUser_id());
