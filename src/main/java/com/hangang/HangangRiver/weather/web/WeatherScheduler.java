@@ -37,7 +37,6 @@ public class WeatherScheduler {
 
 
 	//@Scheduled(cron="*/40 * * * * *")40초마다
-
 	@Scheduled(cron="0 45 * * * *")//매시간 45분
 	public void setWeatherInformation() throws IOException, ParseException{
 		Weather weatherInformation = new Weather();
@@ -63,8 +62,9 @@ public class WeatherScheduler {
 
 		logger.error("[insertDBWeather::::"+weatherInformation+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
 		System.out.println("[insertDBWeather::::"+weatherInformation+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
-
-		weatherService.createWeatherInformation(weatherInformation);
+		if (Double.parseDouble(weatherInformation.getTmn())!=0 && Double.parseDouble(weatherInformation.getTmx())!=0){
+			weatherService.createWeatherInformation(weatherInformation);
+		}
 	}
 
 	public Weather getNowWeather() throws IOException, ParseException{
