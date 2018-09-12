@@ -29,5 +29,8 @@
         <Logger name="com.hangang.HangangRiver.common.web" level="info" additivity="false">
             <AppenderRef ref="ConsoleAppender"/>
         </Logger>
+        <Logger name="com.hangang.HangangRiver.common.web" level="debug" additivity="false">
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
     </Loggers>
 </Configuration>
