@@ -38,7 +38,8 @@ public class WeatherScheduler {
 
 	//@Scheduled(cron="*/40 * * * * *")40초마다
 
-	@Scheduled(cron="0 45 * * * *")//매시간 45분
+	//@Scheduled(cron="0 45 * * * *")//매시간 45분
+	@Scheduled(cron="*/40 * * * * *")//40초마다
 	public void setWeatherInformation() throws IOException, ParseException{
 		Weather weatherInformation = new Weather();
 		weatherInformation = getNowWeather();
@@ -63,7 +64,7 @@ public class WeatherScheduler {
 
 		logger.error("[insertDBWeather::::"+weatherInformation+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
 		System.out.println("[insertDBWeather::::"+weatherInformation+"nowTime::::"+new Date()+"todayWeather::::"+todayTmn+"--"+todayTmx+"]");
-		if (Double.parseDouble(weatherInformation.getTmn())!=0 || Double.parseDouble(weatherInformation.getTmx())!=0){
+		if (Double.parseDouble(weatherInformation.getTmn())!=0 && Double.parseDouble(weatherInformation.getTmx())!=0){
 			weatherService.createWeatherInformation(weatherInformation);
 		}
 	}
@@ -72,7 +73,8 @@ public class WeatherScheduler {
 		//현재기온, 현재 구름 상태 , 현재 강수상태 조회
 		Date today = new Date();
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH");
-		String baseTime = timeFormat.format(today)+"40";
+		//String baseTime = timeFormat.format(today)+"40";
+		String baseTime = "2040";
 		String service = "ForecastGrib";
 		String serviceValue = "obsrValue";
 		Weather resultWeather = callWeatherAPI(baseTime, service, serviceValue);
