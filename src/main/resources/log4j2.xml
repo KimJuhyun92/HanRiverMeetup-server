@@ -10,8 +10,8 @@
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
         <RollingFile name="FileAppender"
-                     fileName="log/app.log"
-                     filePattern="log/app.%d{MM-dd-yyyy-HH-mm}.log.gz"
+                     fileName="/var/log/hanriver/app.log"
+                     filePattern="/var/log/hanriver/app.%d{MM-dd-yyyy-HH-mm}.log.gz"
                      ignoreExceptions="false">
             <PatternLayout>
                 <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n%ex</Pattern>
