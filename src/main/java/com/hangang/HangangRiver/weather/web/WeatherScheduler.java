@@ -71,8 +71,7 @@ public class WeatherScheduler {
 		//현재기온, 현재 구름 상태 , 현재 강수상태 조회
 		Date today = new Date();
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH");
-		//String baseTime = timeFormat.format(today)+"40";
-		String baseTime = "2040";
+		String baseTime = timeFormat.format(today)+"40";
 		String service = "ForecastGrib";
 		String serviceValue = "obsrValue";
 		Weather resultWeather = callWeatherAPI(baseTime, service, serviceValue);
