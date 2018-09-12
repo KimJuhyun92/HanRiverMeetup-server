@@ -37,8 +37,6 @@ public class WeatherScheduler {
 
 
 	//@Scheduled(cron="*/40 * * * * *")40초마다
-
-	//@Scheduled(cron="0 45 * * * *")//매시간 45분
 	@Scheduled(cron="0 45 * * * *")//매시간 45분
 	public void setWeatherInformation() throws IOException, ParseException{
 		Weather weatherInformation = new Weather();
