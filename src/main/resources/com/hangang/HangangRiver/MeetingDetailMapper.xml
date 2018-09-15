@@ -90,26 +90,31 @@
 
 	<select id="selectAll" parameterType="com.hangang.HangangRiver.meeting.model.MeetingDetail" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
-			mmseq as meeting_seq, creation_time, activity_seq, user_id, meeting_time, participants_cnt, expected_cost, title, meeting_location, lat, lng
+			mmseq as meeting_seq, creation_time, activity_seq, matching.user_id, meeting_time, participants_cnt, expected_cost, title, meeting_location, lat, lng, description, nickname, modification_time
+		FROM
+		(SELECT
+			m.meeting_seq AS mmseq, c.meeting_seq AS cmseq, m.creation_time, m.activity_seq, m.user_id, m.meeting_time, m.participants_cnt, m.expected_cost, m.title, m.meeting_location, m.lat, m.lng, m.description, m.nickname, m.modification_time
 		FROM
 			(SELECT
-				m.meeting_seq AS mmseq, c.meeting_seq AS cmseq, m.creation_time, m.activity_seq, m.user_id, m.meeting_time, m.participants_cnt, m.expected_cost, m.title, m.meeting_location, m.lat, m.lng
-			FROM
-				meeting m LEFT JOIN contacted_meeting c ON m.meeting_seq = c.meeting_seq) matching
-			WHERE
-				cmseq IS NULL
-			<if test="startTime != null and startTime!= ''">
-				AND
-					creation_time BETWEEN #{startTime} AND #{endTime}
-			</if>
-			<if test="activity_seq != null and activity_seq!= ''">
-				AND
-					activity_seq = #{activity_seq}
-			</if>
-			<if test="startTime == null or startTime == ''">
-				AND
-					creation_time  BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()
-			</if>
+				meeting.meeting_seq, meeting.user_id, meeting.activity_seq, meeting.description, meeting.participants_cnt, meeting.meeting_location, meeting.meeting_time, meeting.expected_cost, meeting.creation_time, meeting.modification_time, meeting.title, meeting.lat, meeting.lng, user.nickname
+			FROM meeting, user
+		WHERE
+			meeting.user_id = user.user_id)as m 
+		LEFT JOIN contacted_meeting c ON m.meeting_seq = c.meeting_seq) matching
+		WHERE
+			cmseq IS NULL
+		<if test="startTime != null and startTime!= ''">
+			AND
+				creation_time BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="activity_seq != null and activity_seq!= ''">
+			AND
+				activity_seq = #{activity_seq}
+		</if>
+		<if test="startTime == null or startTime == ''">
+			AND
+				creation_time  BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()
+		</if>
 	</select>
 
 	<select id="isDuplicatedDetail" resultType="boolean">
