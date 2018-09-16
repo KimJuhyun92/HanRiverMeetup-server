@@ -5,9 +5,9 @@
 	<insert id="insert" parameterType="com.hangang.HangangRiver.access.model.User">
 		INSERT INTO
 			user
-			(user_id, nickname, access_token, hangang_token, last_login_time, creation_time)
+			(user_id, nickname, access_token, hangang_token, fcm_token, last_login_time, creation_time)
 		VALUES
-			(#{user_id}, #{nickname}, #{access_token}, #{hangang_token}, now(), now())
+			(#{user_id}, #{nickname}, #{access_token}, #{hangang_token}, #{fcm_token}, now(), now())
 	</insert>
 
 	<select id="detail" parameterType="com.hangang.HangangRiver.access.model.User" resultType="com.hangang.HangangRiver.access.model.User">

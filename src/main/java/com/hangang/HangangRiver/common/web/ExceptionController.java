@@ -56,7 +56,7 @@ public class ExceptionController {
         return e.getMessage();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(value = LoginValidateException.class)
     public String handleBaseException(LoginValidateException e){
         logger.error(e.getMessage(), e);
@@ -66,6 +66,20 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = ExistUserNickNameException.class)
     public String handleBaseException(ExistUserNickNameException e){
+        logger.error(e.getMessage(), e);
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(value = NotExistUserException.class)
+    public String handleBaseException(NotExistUserException e){
+        logger.error(e.getMessage(), e);
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(value = NotExistFacebookUserException.class)
+    public String handleBaseException(NotExistFacebookUserException e){
         logger.error(e.getMessage(), e);
         return e.getMessage();
     }

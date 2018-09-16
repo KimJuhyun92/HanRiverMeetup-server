@@ -9,6 +9,15 @@ public class User {
 	private String hangang_token;
 	private Date last_login_time;
 	private Date creation_time;
+	private String fcm_token;
+
+	public String getFcm_token() {
+		return fcm_token;
+	}
+
+	public void setFcm_token(String fcm_token) {
+		this.fcm_token = fcm_token;
+	}
 
 	public String getUser_id() {
 		return user_id;

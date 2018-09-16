@@ -27,11 +27,16 @@ public class AccessService {
     	accessMapper.update(user_id, user);
     }
 
-    public User registUser(String user_id, User user) throws ExistUserNickNameException{
-        if(accessMapper.isExistNickname(user.getNickname())) {
+    public User registUser(String user_id, User user) throws Exception {
+        if(user.getNickname() == null) {
+            throw new Exception();
+        }
+
+	    if(accessMapper.isExistNickname(user.getNickname())) {
             throw new ExistUserNickNameException();
         }
-    	accessMapper.update(user_id, user);
+
+    	accessMapper.insert(user);
     	return user;
     }
 }
