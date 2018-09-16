@@ -1,6 +1,5 @@
 package com.hangang.HangangRiver.access.web;
 
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -9,6 +8,8 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.hangang.HangangRiver.exceptions.NotExistFacebookUserException;
+import com.hangang.HangangRiver.exceptions.NotExistUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hangang.HangangRiver.access.model.User;
 import com.hangang.HangangRiver.access.service.AccessService;
-import com.hangang.HangangRiver.exceptions.ExistUserNickNameException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,73 +30,83 @@ public class AccessController {
 	@Autowired
 	AccessService accessService;
 
-	@PostMapping("/loginValidate")
-	private ResponseEntity<User> loginValidate(HttpServletRequest request, @RequestBody User user)
+	@PostMapping("/login")
+	private ResponseEntity<User> login(HttpServletRequest request, @RequestBody User user)
 			throws Exception {
-		return ResponseEntity.ok().body(submitFacebookLogin(user.getAccess_token(),user.getUser_id(), user));
-	}
 
-	@PostMapping("/registUser")
-	private ResponseEntity<User> registUser(HttpServletRequest request, @RequestBody User user)
-			throws ExistUserNickNameException {
-		return ResponseEntity.ok().body(accessService.registUser(user.getUser_id(), user));
-	}
+//		User retUser = submitFacebookLogin(user.getAccess_token(), user);
+//
+//		if(retUser == null) {
+//			throw new LoginValidateException();
+//		}
+//
+//		return ResponseEntity.ok().body(retUser);
 
-	private User submitFacebookLogin(String accessToken, String user_id, User paramUser)
-			throws Exception {
-		User faceUser =faceBookUserInfoValidate(accessToken, user_id);//페북에 한번더 검증 요청
-		User userInfo = null;
-		if (faceUser != null){//검증된 경우
-			userInfo = saveUserInfo(faceUser, paramUser);
+		if(isValidFacebookUser(user.getAccess_token(), user.getUser_id())) {
+			User loginedUser = userLogin(user);
+
+			if(loginedUser != null) {
+				return ResponseEntity.ok().body(loginedUser);
+			}
+
+			throw new NotExistUserException();
 		}
-		return userInfo;
+		else {
+			throw new NotExistFacebookUserException();
+		}
 	}
 
-	public User faceBookUserInfoValidate(String accessToken, String user_id)
+	@PostMapping("/register")
+	private ResponseEntity<User> register(HttpServletRequest request, @RequestBody User user)
 			throws Exception {
-		BufferedReader in = null;
-		URL obj = new URL("https://graph.facebook.com/me?access_token="+accessToken);
+
+		if(isValidFacebookUser(user.getAccess_token(), user.getUser_id())) {
+			String hangang_token = hashMD5(user.getAccess_token() + user.getUser_id());
+			user.setHangang_token(hangang_token);
+			return ResponseEntity.ok().body(accessService.registUser(user.getUser_id(), user));
+		}
+
+		throw new NotExistFacebookUserException();
+
+	}
+//
+//	private User submitFacebookLogin(String accessToken, User user)
+//			throws Exception {
+//		if (isValidFacebookUser(accessToken, user.getUser_id())){
+//			facebookUser.setFcm_token(user.getFcm_token());
+//			return checkUserInfo(facebookUser);
+//		}
+//
+//		throw new NotExistFacebookUserException();
+//	}
+
+	public boolean isValidFacebookUser(String accessToken, String userID)
+			throws Exception {
+		URL obj = new URL("https://graph.facebook.com/me?access_token=" + accessToken);
 		HttpURLConnection con = (HttpURLConnection)obj.openConnection();
 		con.setRequestMethod("GET");
-		in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
-		String line;
-		String readLine = null;
-		while((line = in.readLine()) != null) {
-			if (line != null){
-				readLine =line;
-			}
-		}
-		JSONParser parser = new JSONParser();
-		Object parseObj = parser.parse(readLine);
-		JSONObject jsonObj = (JSONObject) parseObj;
-		String face_user_id = (String) jsonObj.get("id");
-		//String face_name = (String) jsonObj.get("name");
-		User user = new User();
-		if (user_id.equals(face_user_id)){
-			//user.setNickname(face_name);
-			user.setAccess_token(accessToken);
-			user.setUser_id(face_user_id);
-			return user;
+
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObj = (JSONObject)jsonParser.parse(
+				new InputStreamReader(con.getInputStream(), "UTF-8"));
+
+		String facebookUserID = (String) jsonObj.get("id");
+
+		return userID.equals(facebookUserID);
+	}
+
+	public User userLogin(User user){
+		if (isExistUser(user)){
+			String hangang_token = hashMD5(user.getAccess_token() + user.getUser_id());
+			user.setHangang_token(hangang_token);
+			accessService.modifyUser(user.getUser_id(), user);
+			return accessService.getUserDetailById(user.getUser_id());
 		}else {
-			return user;
+			return null;
 		}
 	}
 
-	public User saveUserInfo(User user, User paramUser){
-		Boolean existUser = selectExistUser(user);//최초로그인인지 확인
-		user.setUser_id(user.getUser_id());
-		String hangang_token = hashMD5(user.getAccess_token()+user.getUser_id());
-		user.setHangang_token(hangang_token);
-		if (existUser){
-			accessService.modifyUser(user.getUser_id(), user);//아니면 한강토큰 업뎃
-		}else {
-			user.setFcm_token(paramUser.getFcm_token());
-			accessService.createUser(user);//최초로그인이면 insert
-		}
-		return accessService.getUserDetailById(user.getUser_id());
-	}
-
-	public Boolean selectExistUser(User user){
+	public Boolean isExistUser(User user){
 		return accessService.getUserDetailById(user.getUser_id())!=null;
 	}
 

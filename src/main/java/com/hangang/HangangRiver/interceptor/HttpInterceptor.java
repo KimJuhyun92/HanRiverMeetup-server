@@ -40,7 +40,10 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		if (checkPath("/configuration", servletPath)) {
 			return true;
 		}
-		if (checkPath("/access/loginValidate", servletPath)) {
+		if (checkPath("/access/login", servletPath)) {
+			return true;
+		}
+		if (checkPath("/access/register", servletPath)) {
 			return true;
 		}
 		String reqHangang_token =request.getHeader("hangang_token");
