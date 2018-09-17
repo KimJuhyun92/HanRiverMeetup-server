@@ -66,5 +66,4 @@ public class TimeLine {
 		return "TimeLine [timeline_seq=" + timeline_seq + ", user_id=" + user_id + ", location=" + location
 				+ ", imageurl=" + imageurl + ", content=" + content + ", creation_time=" + creation_time + "]";
 	}
-
 }

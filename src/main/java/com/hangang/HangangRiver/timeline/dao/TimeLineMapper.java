@@ -11,7 +11,7 @@ public interface TimeLineMapper {
 	int insert(TimeLine timeLine);
 	void delete(int timeLine_seq);
 	List<TimeLineForm> selectTimeLineList(TimeLineForm timeLineForm);
-	List<TimeLineForm> selectTimeLineListWithOffset(@Param("creation_time") String meeting_time,
+	List<TimeLineForm> selectTimeLineListWithOffset(@Param("creation_time") String creation_time,
 										  @Param("offset") Integer offset,
 										  @Param("limit") Integer limit);
 }
