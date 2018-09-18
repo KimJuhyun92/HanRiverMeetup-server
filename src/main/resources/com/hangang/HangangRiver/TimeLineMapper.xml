@@ -34,14 +34,29 @@
 			</if>
 	</select>
 
+	<!--<select id="selectTimeLineListWithOffset" resultType="com.hangang.HangangRiver.timeline.model.TimeLineForm">-->
+		<!--SELECT-->
+			<!--*-->
+		<!--FROM-->
+			<!--timeline-->
+		<!--WHERE-->
+			<!--DATE(#{creation_time}) = DATE(creation_time)-->
+		<!--ORDER BY-->
+			<!--creation_time DESC LIMIT #{limit} OFFSET #{offset}-->
+	<!--</select>-->
+
 	<select id="selectTimeLineListWithOffset" resultType="com.hangang.HangangRiver.timeline.model.TimeLineForm">
 		SELECT
-			*
+			t1.*, t2.nickname
 		FROM
-			timeline
+			hanriver_meeting.timeline t1
+		LEFT JOIN
+			hanriver_meeting.user t2
+		ON
+			t1.user_id = t2.user_id
 		WHERE
-			DATE(#{creation_time}) = DATE(creation_time)
+			DATE(#{creation_time}) = DATE(t1.creation_time)
 		ORDER BY
-			creation_time DESC LIMIT #{limit} OFFSET #{offset}
+			t1.creation_time DESC LIMIT #{limit} OFFSET #{offset}
 	</select>
 </mapper>

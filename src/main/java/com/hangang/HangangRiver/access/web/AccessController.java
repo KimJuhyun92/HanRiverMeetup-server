@@ -34,14 +34,6 @@ public class AccessController {
 	private ResponseEntity<User> login(HttpServletRequest request, @RequestBody User user)
 			throws Exception {
 
-//		User retUser = submitFacebookLogin(user.getAccess_token(), user);
-//
-//		if(retUser == null) {
-//			throw new LoginValidateException();
-//		}
-//
-//		return ResponseEntity.ok().body(retUser);
-
 		if(isValidFacebookUser(user.getAccess_token(), user.getUser_id())) {
 			User loginedUser = userLogin(user);
 
@@ -69,16 +61,6 @@ public class AccessController {
 		throw new NotExistFacebookUserException();
 
 	}
-//
-//	private User submitFacebookLogin(String accessToken, User user)
-//			throws Exception {
-//		if (isValidFacebookUser(accessToken, user.getUser_id())){
-//			facebookUser.setFcm_token(user.getFcm_token());
-//			return checkUserInfo(facebookUser);
-//		}
-//
-//		throw new NotExistFacebookUserException();
-//	}
 
 	public boolean isValidFacebookUser(String accessToken, String userID)
 			throws Exception {
