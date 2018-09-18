@@ -29,6 +29,9 @@
 			<if test="user.access_token != null and user.access_token != ''">
 				access_token = #{user.access_token},
 			</if>
+			<if test="user.fcm_token != null and user.fcm_token != ''">
+				fcm_token = #{user.fcm_token},
+			</if>
 			<if test="user.hangang_token != null and user.hangang_token != ''">
 				hangang_token = #{user.hangang_token},
 			</if>
