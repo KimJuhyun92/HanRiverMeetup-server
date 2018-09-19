@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -22,7 +24,7 @@ public class MeetingGuestController {
     @PostMapping("/join")
     @ResponseBody
     private ResponseEntity<JoinDetail> joinMeeting(HttpServletRequest request, @RequestBody JoinDetail joinDetail)
-            throws ExistJoinDetailException, InvalidMeetingException, OverCountJoinDetailException {
+            throws ExistJoinDetailException, InvalidMeetingException, OverCountJoinDetailException, IOException {
         JoinDetail createdJoinDetail = meetingGuestService.join(joinDetail);
         return ResponseEntity.ok().body(createdJoinDetail);
     }

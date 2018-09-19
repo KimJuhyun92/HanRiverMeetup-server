@@ -142,7 +142,7 @@
 
 	<select id="selectMyMeetings" parameterType="string" resultType="com.hangang.HangangRiver.meeting.model.MeetingDetail">
 		SELECT
-			 meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time
+			 meeting.meeting_seq, meeting.title, meeting.meeting_time, meeting.participants_cnt, meeting.expected_cost, meeting.activity_seq, meeting.creation_time, meeting.meeting_location
 		FROM
 			meeting left join contacted_meeting on meeting.meeting_seq = contacted_meeting.meeting_seq 
 		WHERE
