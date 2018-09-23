@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,7 +25,7 @@ public class MeetingCommController {
 
     @PostMapping("/comment")
     private ResponseEntity<Comment> createComment(HttpServletRequest request, @RequestBody Comment comment)
-            throws InvalidMeetingException {
+            throws InvalidMeetingException, IOException {
         Comment createdComment = meetingCommService.createComment(comment);
         return ResponseEntity.ok().body(createdComment);
     }
@@ -44,7 +46,7 @@ public class MeetingCommController {
 
     @PostMapping("/match")
     private ResponseEntity<ContactedMeeting> match(HttpServletRequest request, @RequestBody ContactedMeeting matchingInfo)
-            throws AlreadyContactedMeetingException, InvalidMatchingInfoException {
+            throws AlreadyContactedMeetingException, InvalidMatchingInfoException, IOException {
         ContactedMeeting contactedMeeting = meetingCommService.match(matchingInfo);
         return ResponseEntity.ok().body(contactedMeeting);
     }

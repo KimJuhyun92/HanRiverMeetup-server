@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangang.HangangRiver.meeting.dao.NotificationLogMapper">
+
+	<insert id="insert" parameterType="com.hangang.HangangRiver.meeting.model.NotificationLog">
+		INSERT INTO
+			notification_log
+			(user_id, message, creation_time)
+		VALUES
+			(#{user_id}, #{message}, current_timestamp)
+		<selectKey keyProperty="notification_seq" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<select id="selectNotificationLogList" parameterType="com.hangang.HangangRiver.meeting.model.NotificationLog" resultType="com.hangang.HangangRiver.meeting.model.NotificationLog">
+		SELECT
+			*
+		FROM 
+			notification_log
+		WHERE
+			user_id = #{user_id}
+		ORDER BY
+			notification_seq DESC
+	</select>
+</mapper>
