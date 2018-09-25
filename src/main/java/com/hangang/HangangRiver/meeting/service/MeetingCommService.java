@@ -1,7 +1,5 @@
 package com.hangang.HangangRiver.meeting.service;
 
-import com.hangang.HangangRiver.access.model.User;
-import com.hangang.HangangRiver.common.web.MessageManager;
 import com.hangang.HangangRiver.exceptions.AlreadyContactedMeetingException;
 import com.hangang.HangangRiver.exceptions.InvalidMatchingInfoException;
 import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
@@ -9,8 +7,6 @@ import com.hangang.HangangRiver.meeting.model.Comment;
 import com.hangang.HangangRiver.meeting.model.ContactedMeeting;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
-import com.hangang.HangangRiver.meeting.model.NotificationLog;
-
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,6 +14,9 @@ import java.util.List;
 
 @Service
 public class MeetingCommService extends MeetingBaseService{
+    private String CONTACT_MSG = "같이 놀강~ 난누굴강 완료모임을 확인해주세요.";
+    private String ADD_COMMENT_MSG = "누가 내가 만든 모임에 관심을 보여요.";
+
     public Comment createComment(Comment comment) throws InvalidMeetingException, IOException {
         // 1. Check the target meeting to be valid
         int meeting_seq = comment.getMeeting_seq();
@@ -26,14 +25,8 @@ public class MeetingCommService extends MeetingBaseService{
             commentMapper.insert(comment);
 
             MeetingDetail meetingDetail = meetingDetailMapper.detail(meeting_seq);
-            User user = accessMapper.detail(meetingDetail.getUser_id());
-            String message = "누가 내가 만든 모임에 관심을 보여요.";
-            MessageManager.sendCommonMessage(user.getFcm_token(), "심심한강", message);
+            pushMessage(meetingDetail.getUser_id(), ADD_COMMENT_MSG);
 
-            NotificationLog notificationLog = new NotificationLog();
-            notificationLog.setUser_id(meetingDetail.getUser_id());
-            notificationLog.setMessage(message);
-            notificationLogMapper.insert(notificationLog);
             return comment;
         }
         else {
@@ -72,21 +65,8 @@ public class MeetingCommService extends MeetingBaseService{
         meeting.setGuest_user_id(joinDetailInfo.getUser_id());
         matchingMapper.insert(meeting);
 
-        User hostUser = accessMapper.detail(meeting.getHost_user_id());
-        User guestUser = accessMapper.detail(meeting.getGuest_user_id());
-        String message = "같이 놀강~ 난누굴강 완료모임을 확인해주세요.";
-        MessageManager.sendCommonMessage(hostUser.getFcm_token(), "심심한강", message);
-        MessageManager.sendCommonMessage(guestUser.getFcm_token(), "심심한강", message);
-
-        NotificationLog hostNotificationLog = new NotificationLog();
-        hostNotificationLog.setUser_id(meeting.getHost_user_id());
-        hostNotificationLog.setMessage(message);
-        notificationLogMapper.insert(hostNotificationLog);
-
-        NotificationLog guestNotificationLog = new NotificationLog();
-        guestNotificationLog.setUser_id(meeting.getGuest_user_id());
-        guestNotificationLog.setMessage(message);
-        notificationLogMapper.insert(guestNotificationLog);
+        pushMessage(meeting.getHost_user_id(), CONTACT_MSG);
+        pushMessage(meeting.getGuest_user_id(), CONTACT_MSG);
 
         return meeting;
     }
@@ -102,12 +82,4 @@ public class MeetingCommService extends MeetingBaseService{
     public void unmatch(int contact_seq){
         matchingMapper.delete(contact_seq);
     }
-
-/*    public List<MeetingDetail> selectMyMatchingMeetings(String user_id){
-        return matchingMapper.selectMyMatchingMeetings(user_id);
-    }
-
-    public List<MeetingDetail> selectMyMatchingApplications(String user_id){
-        return matchingMapper.selectMyMatchingApplications(user_id);
-    }*/
 }

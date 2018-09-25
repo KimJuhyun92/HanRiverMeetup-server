@@ -2,7 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hangang.HangangRiver.meeting.dao.NotificationLogMapper">
 
-	<insert id="insert" parameterType="com.hangang.HangangRiver.meeting.model.NotificationLog">
+	<insert id="insert">
+		INSERT INTO
+		notification_log
+		(user_id, message, creation_time)
+		VALUES
+		(#{user_id}, #{message}, current_timestamp)
+		<selectKey keyProperty="notification_seq" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<insert id="insertDetail" parameterType="com.hangang.HangangRiver.meeting.model.NotificationLog">
 		INSERT INTO
 			notification_log
 			(user_id, message, creation_time)
