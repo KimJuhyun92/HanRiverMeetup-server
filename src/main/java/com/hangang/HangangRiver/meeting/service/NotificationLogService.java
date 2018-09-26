@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class NotificationLogService extends MeetingBaseService{
     public NotificationLog createNotificationLog(NotificationLog notificationLog){
-            notificationLogMapper.insert(notificationLog);
+            notificationLogMapper.insertDetail(notificationLog);
             return notificationLog;
     }
 

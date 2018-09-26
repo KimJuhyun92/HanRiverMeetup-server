@@ -67,7 +67,7 @@ public class MessageManager {
         HttpURLConnection connection = getConnection();
         connection.setDoOutput(true);
         DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-        outputStream.writeBytes(fcmMessage.toString());
+        outputStream.write(fcmMessage.toString().getBytes("UTF-8"));
         outputStream.flush();
         outputStream.close();
 
@@ -138,7 +138,11 @@ public class MessageManager {
         sendMessage(notificationMessage);
     }
 
-
+    /**
+     * Send notification message to FCM for delivery to specific topic.
+     *
+     * @throws IOException
+     */
     public static void sendTopicMessage(String topic, String title, String body) throws IOException {
         JsonObject notificationMessage = buildNotificationMessage(topic, title, body);
         System.out.println("FCM request body for message using common notification object:");
