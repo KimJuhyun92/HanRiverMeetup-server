@@ -20,18 +20,19 @@ public class MeetingCommService extends MeetingBaseService{
     public Comment createComment(Comment comment) throws InvalidMeetingException, IOException {
         // 1. Check the target meeting to be valid
         int meeting_seq = comment.getMeeting_seq();
+        MeetingDetail meetingDetail = meetingDetailMapper.detail(meeting_seq);
 
-        if (meetingDetailMapper.isExistMeetingDetail(meeting_seq)) {
-            commentMapper.insert(comment);
-
-            MeetingDetail meetingDetail = meetingDetailMapper.detail(meeting_seq);
-            pushMessage(meetingDetail.getUser_id(), ADD_COMMENT_MSG);
-
-            return comment;
-        }
-        else {
+        if (meetingDetail == null) {
             throw new InvalidMeetingException();
         }
+
+        commentMapper.insert(comment);
+
+        if(comment.getUser_id().compareTo(meetingDetail.getUser_id()) != 0){
+            pushMessage(meetingDetail.getUser_id(), ADD_COMMENT_MSG);
+        }
+
+        return comment;
     }
 
     public List<Comment> getCommentsByMeeting(int meeting_seq){
