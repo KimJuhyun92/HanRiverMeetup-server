@@ -113,7 +113,7 @@
 		</if>
 		<if test="startTime == null or startTime == ''">
 			AND
-				creation_time  BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()
+				creation_time  BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW()
 		</if>
 	</select>
 
