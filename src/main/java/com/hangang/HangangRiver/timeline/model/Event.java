@@ -10,6 +10,7 @@ public class Event {
 	private boolean isongoing;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="Asia/Seoul")
 	private Date creation_time;
+	private String url;
 
 	public int getEvent_seq() {
 		return event_seq;
@@ -22,6 +23,10 @@ public class Event {
 	public String getImageurl() {
 		return imageurl;
 	}
+
+	public void setUrl(String url) { this.url = url; }
+
+	public String getUrl() { return url; }
 
 	public void setImageurl(String imageurl) {
 		this.imageurl = imageurl;

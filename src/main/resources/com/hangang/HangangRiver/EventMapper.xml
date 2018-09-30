@@ -5,9 +5,9 @@
 	<insert id="insert" parameterType="com.hangang.HangangRiver.timeline.model.Event">
 		INSERT INTO
 			event
-			(imageurl, isongoing, creation_time)
+			(imageurl, url, isongoing, creation_time)
 		VALUES
-			(#{imageurl}, #{isongoing}, current_timestamp)
+			(#{imageurl}, #{url}, #{isongoing}, current_timestamp)
 		<selectKey keyProperty="event_seq" resultType="Integer">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
