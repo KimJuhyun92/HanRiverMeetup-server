@@ -2,6 +2,7 @@ package com.hangang.HangangRiver.meeting.web;
 
 import com.hangang.HangangRiver.exceptions.ExistJoinDetailException;
 import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
+import com.hangang.HangangRiver.exceptions.InvalidMyMeetingException;
 import com.hangang.HangangRiver.exceptions.OverCountJoinDetailException;
 import com.hangang.HangangRiver.meeting.model.JoinDetail;
 import com.hangang.HangangRiver.meeting.model.MeetingDetail;
@@ -24,7 +25,7 @@ public class MeetingGuestController {
     @PostMapping("/join")
     @ResponseBody
     private ResponseEntity<JoinDetail> joinMeeting(HttpServletRequest request, @RequestBody JoinDetail joinDetail)
-            throws ExistJoinDetailException, InvalidMeetingException, OverCountJoinDetailException, IOException {
+            throws ExistJoinDetailException, InvalidMeetingException, OverCountJoinDetailException, IOException, InvalidMyMeetingException {
         JoinDetail createdJoinDetail = meetingGuestService.join(joinDetail);
         return ResponseEntity.ok().body(createdJoinDetail);
     }

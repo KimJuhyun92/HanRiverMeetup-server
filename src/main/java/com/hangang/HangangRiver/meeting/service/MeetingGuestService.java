@@ -1,25 +1,30 @@
 package com.hangang.HangangRiver.meeting.service;
 
-import com.hangang.HangangRiver.exceptions.ExistJoinDetailException;
-import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
-import com.hangang.HangangRiver.exceptions.OverCountJoinDetailException;
-import com.hangang.HangangRiver.meeting.model.JoinDetail;
-import com.hangang.HangangRiver.meeting.model.MeetingDetail;
+import java.io.IOException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.List;
+import com.hangang.HangangRiver.exceptions.ExistJoinDetailException;
+import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
+import com.hangang.HangangRiver.exceptions.InvalidMyMeetingException;
+import com.hangang.HangangRiver.exceptions.OverCountJoinDetailException;
+import com.hangang.HangangRiver.meeting.model.JoinDetail;
+import com.hangang.HangangRiver.meeting.model.MeetingDetail;
 
 @Service
 public class MeetingGuestService extends MeetingBaseService{
     private final String JOIN_MSG = "똑똑! 내가 만든 모임에 신청자가 왔습니다!";
 
     public JoinDetail join(JoinDetail joinDetail)
-            throws ExistJoinDetailException, InvalidMeetingException, OverCountJoinDetailException, IOException {
+            throws ExistJoinDetailException, InvalidMeetingException, OverCountJoinDetailException, IOException, InvalidMyMeetingException {
 
         int meeting_seq = joinDetail.getMeeting_seq();
         String user_id = joinDetail.getUser_id();
+
+        if (meetingDetailMapper.detail(meeting_seq).getUser_id().equals(user_id)) {
+            throw new InvalidMyMeetingException();
+        }
 
         if(joinDetailMapper.isExistJoinDetails(meeting_seq, user_id)) {
             throw new ExistJoinDetailException();
