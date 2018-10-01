@@ -115,6 +115,8 @@
 			AND
 				creation_time  BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW()
 		</if>
+		ORDER BY
+			creation_time DESC
 	</select>
 
 	<select id="isDuplicatedDetail" resultType="boolean">

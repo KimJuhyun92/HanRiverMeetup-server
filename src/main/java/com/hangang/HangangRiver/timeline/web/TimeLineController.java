@@ -6,7 +6,11 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.hangang.HangangRiver.common.web.ExceptionController;
 import com.hangang.HangangRiver.exceptions.InvalidJsonBody;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +30,19 @@ import com.hangang.HangangRiver.timeline.service.TimeLineService;
 @RequestMapping("/timeLine")
 public class TimeLineController {
 
+    private static final Logger logger = LogManager.getLogger(TimeLineController.class);
+
     @Autowired
     TimeLineService timeLineService;
 
     @PostMapping("/post")
     private ResponseEntity<TimeLine> createPost(HttpServletRequest request, @RequestBody TimeLine timeLine){
-    	TimeLine createdTimeLine = timeLineService.createTimeLine(timeLine);
+    	TimeLine createdTimeLine = null;
+    	if (timeLine.getContent() == null || timeLine.getImageurl() == null){
+    		logger.error("타임라인의 내용이 없다.");
+    	} else {
+    		createdTimeLine = timeLineService.createTimeLine(timeLine);
+    	}
         return ResponseEntity.ok().body(createdTimeLine);
     }
 
