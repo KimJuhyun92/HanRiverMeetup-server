@@ -43,6 +43,13 @@ public class ExceptionController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = InvalidMyMeetingException.class)
+    public String handleBaseException(InvalidMyMeetingException e){
+        logger.error(e.getMessage(), e);
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = InvalidMatchingInfoException.class)
     public String handleBaseException(InvalidMatchingInfoException e){
         logger.error(e.getMessage(), e);
