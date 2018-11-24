@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hangang.HangangRiver.timeline.dao.EventMapper">
+<mapper namespace="com.hangang.HangangRiver.event.dao.EventMapper">
 
-	<insert id="insert" parameterType="com.hangang.HangangRiver.timeline.model.Event">
+	<insert id="insert" parameterType="com.hangang.HangangRiver.event.model.Event">
 		INSERT INTO
 			event
 			(imageurl, url, isongoing, creation_time)
@@ -13,7 +13,7 @@
 		</selectKey>
 	</insert>
 
-	<select id="detail" parameterType="com.hangang.HangangRiver.timeline.model.Event" resultType="com.hangang.HangangRiver.timeline.model.Event">
+	<select id="detail" parameterType="com.hangang.HangangRiver.event.model.Event" resultType="com.hangang.HangangRiver.event.model.Event">
 		SELECT
 			*
 		FROM
@@ -22,7 +22,7 @@
 			event_seq = #{event_seq}
 	</select>
 
-	<delete id="delete" parameterType="com.hangang.HangangRiver.timeline.model.Event">
+	<delete id="delete" parameterType="com.hangang.HangangRiver.event.model.Event">
 		DELETE
 		FROM
 			event
@@ -45,7 +45,7 @@
 			event_seq = #{event_seq}
 	</update>
 
-	<select id="selectEventList" parameterType="com.hangang.HangangRiver.timeline.model.Event" resultType="com.hangang.HangangRiver.timeline.model.Event">
+	<select id="selectEventList" parameterType="com.hangang.HangangRiver.event.model.Event" resultType="com.hangang.HangangRiver.event.model.Event">
 		SELECT
 			*
 		FROM 

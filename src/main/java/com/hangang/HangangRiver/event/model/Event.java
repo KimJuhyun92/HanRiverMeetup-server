@@ -1,8 +1,8 @@
-package com.hangang.HangangRiver.timeline.model;
-
-import java.util.Date;
+package com.hangang.HangangRiver.event.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 public class Event {
 	private int event_seq;

@@ -1,15 +1,12 @@
-package com.hangang.HangangRiver.timeline.service;
+package com.hangang.HangangRiver.event.service;
 
-import java.util.List;
-
+import com.hangang.HangangRiver.event.dao.EventMapper;
+import com.hangang.HangangRiver.event.model.Event;
+import com.hangang.HangangRiver.exceptions.InvalidEventException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hangang.HangangRiver.exceptions.InvalidEventException;
-import com.hangang.HangangRiver.exceptions.InvalidMeetingException;
-import com.hangang.HangangRiver.meeting.model.MeetingDetail;
-import com.hangang.HangangRiver.timeline.dao.EventMapper;
-import com.hangang.HangangRiver.timeline.model.Event;
+import java.util.List;
 
 @Service
 public class EventService {
