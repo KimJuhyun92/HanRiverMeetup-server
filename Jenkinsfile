@@ -11,6 +11,7 @@ sudo pkill -f \'java -jar\' || true;'''
       steps {
         sh '''pwd;
 cp /var/www/application.properties ./src/main/resources/application.properties;
+cp /var/www/service-account.json ./service-account.json;
 mvn clean package;'''
       }
     }
