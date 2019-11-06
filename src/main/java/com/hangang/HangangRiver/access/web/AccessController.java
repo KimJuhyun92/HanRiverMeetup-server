@@ -55,6 +55,10 @@ public class AccessController {
 		if(isValidFacebookUser(user.getAccess_token(), user.getUser_id())) {
 			String hangang_token = hashMD5(user.getAccess_token() + user.getUser_id());
 			user.setHangang_token(hangang_token);
+			//test
+			System.out.println("@@@token " + user.getAccess_token());
+			System.out.println("@@@id " + user.getUser_id());
+			System.out.println("@@@hangang_token " + hangang_token);
 			return ResponseEntity.ok().body(accessService.registUser(user.getUser_id(), user));
 		}
 

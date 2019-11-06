@@ -49,9 +49,9 @@
 		SELECT
 			t1.*, t2.nickname
 		FROM
-			hanriver_meeting.timeline t1
+			hanriver.timeline t1
 		LEFT JOIN
-			hanriver_meeting.user t2
+			hanriver.user t2
 		ON
 			t1.user_id = t2.user_id
 		ORDER BY

@@ -36,6 +36,9 @@ public class AccessService {
             throw new ExistUserNickNameException();
         }
 
+	    //test
+        System.out.println("ok");
+
     	accessMapper.insert(user);
     	return user;
     }

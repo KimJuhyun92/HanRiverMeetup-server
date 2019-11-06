@@ -28,13 +28,13 @@ public class TimeLineService {
     }
 
     public List<TimeLineForm> selectTodayTimeLine(TimeLineForm timeLineForm){
-        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
-        Date currentTime = new Date ();
-        String time = SimpleDateFormat.format ( currentTime );
+            SimpleDateFormat SimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+            Date currentTime = new Date ();
+            String time = SimpleDateFormat.format ( currentTime );
 
-        timeLineForm.setStartTime(time+" 00:00:00");
-        timeLineForm.setEndTime(time+" 23:59:59");
-    	return timeLineMapper.selectTimeLineList(timeLineForm);
+            timeLineForm.setStartTime(time+" 00:00:00");
+            timeLineForm.setEndTime(time+" 23:59:59");
+            return timeLineMapper.selectTimeLineList(timeLineForm);
     }
 
     public List<TimeLineForm> selectPosts(Date date, Integer offset, Integer limit) {

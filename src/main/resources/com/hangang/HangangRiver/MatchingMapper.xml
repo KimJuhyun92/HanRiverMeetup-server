@@ -91,7 +91,7 @@
 		SELECT
 			*
 		FROM
-			hanriver_meeting.contacted_meeting
+			hanriver.contacted_meeting
 		WHERE
 			host_user_id = #{user_id} OR guest_user_id = #{user_id}
 	</select>

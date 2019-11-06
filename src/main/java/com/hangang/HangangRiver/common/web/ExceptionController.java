@@ -112,10 +112,10 @@ public class ExceptionController {
         return e.getMessage();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = Exception.class)
-    public String handleBaseException(Exception e){
-        logger.error(e.getMessage(), e);
-        return "서버에서 예외가 발생했습니다. 확인해주세요";
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(value = Exception.class)
+//    public String handleBaseException(Exception e){
+//        logger.error(e.getMessage(), e);
+//        return "서버에서 예외가 발생했습니다. 확인해주세요";
+//    }
 }
